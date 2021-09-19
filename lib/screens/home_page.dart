@@ -1,6 +1,13 @@
 import 'package:apwen/drawer.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:apwen/screens/about_apwen.dart';
+import 'package:apwen/screens/about_speakers.dart';
+import 'package:apwen/screens/programme.dart';
+import 'package:apwen/screens/social_events.dart';
+import 'package:apwen/screens/sponsors.dart';
+import 'package:apwen/screens/topics_speakers.dart';
+import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -67,6 +74,30 @@ class _HomePageState extends State<HomePage> {
         name: 'Engr. Zansi Adebowale, MNSE',
         position: 'Strategic Brand Director')
   };
+  List<NavButton> nav = [
+    NavButton(
+        title: 'Speakers',
+        icon: FontAwesomeIcons.microphone,
+        route: TopicsSpeakers.routeName),
+    NavButton(
+        title: 'Schedule',
+        icon: FontAwesomeIcons.calendarAlt,
+        route: YoungEngineersSchedule.routeName),
+    NavButton(
+        title: 'Resources',
+        icon: FontAwesomeIcons.filePdf,
+        route: Programme.routeName),
+    NavButton(
+        title: 'Sponsors',
+        icon: FontAwesomeIcons.peopleCarry,
+        route: Sponsors.routeName),
+    NavButton(
+        title: 'Events', icon: Icons.event, route: SocialEvents.routeName),
+    NavButton(
+        title: 'About',
+        icon: FontAwesomeIcons.infoCircle,
+        route: AboutAPWEN.routeName),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -109,83 +140,151 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: [
-          SizedBox(height: 30),
+          SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('National',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Theme.of(context).hintColor)),
-                Text('Executives',
-                    style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
-          ),
-          CarouselSlider(
-            items: List.generate(22, (index) => index + 1)
-                .map((e) => Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 20, 10, 20),
-                            width: width,
-                            height: 250,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                'assets/executives/$e.jpeg',
-                                fit: BoxFit.cover,
-                                alignment: Alignment.topCenter,
-                              ),
-                            ),
-                          ),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  mainAxisExtent: 120),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    if (nav[index].title == 'Schedule') {
+                      Navigator.pushNamed(context, nav[index].route);
+                    } else {
+                      selected = nav[index].route;
+                      Navigator.pushReplacementNamed(context, nav[index].route);
+                    }
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(5),
+                    padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
+                    decoration: BoxDecoration(
+                      // color: Theme.of(context).textTheme.bodyText1?.color,
+                      color: Color(0xff183750),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            children: [
-                              Text(
-                                  names.entries
-                                      .firstWhere((element) => element.key == e)
-                                      .value
-                                      .name,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      ?.copyWith(fontSize: 20)),
-                              SizedBox(height: 3),
-                              Text(
-                                names.entries
-                                    .firstWhere((element) => element.key == e)
-                                    .value
-                                    .position,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    ?.copyWith(
-                                        fontSize: 17, color: Colors.black54),
-                              ),
-                            ],
-                          ),
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(nav[index].icon,
+                            color: Theme.of(context).hintColor),
+                        SizedBox(height: 10),
+                        Text(
+                          nav[index].title,
+                          style: TextStyle(fontSize: 22, color: Colors.white),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              nav[index].title == 'Schedule'
+                                  ? 'Young Engineers'
+                                  : 'APWEN 2021',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
+                            ),
+                            Spacer(),
+                            Icon(Icons.arrow_right_alt,
+                                color: Theme.of(context).hintColor)
+                          ],
                         )
                       ],
-                    ))
-                .toList(),
-            options: CarouselOptions(
-              autoPlay: true,
-              height: 350,
-              enableInfiniteScroll: true,
-              viewportFraction: 0.8,
-              enlargeCenterPage: true,
-              autoPlayAnimationDuration: Duration(seconds: 1),
+                    ),
+                  ),
+                );
+              },
+              itemCount: 6,
             ),
           ),
+          // SizedBox(height: 30),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 25),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text('National',
+          //           style: Theme.of(context)
+          //               .textTheme
+          //               .bodyText1
+          //               ?.copyWith(color: Theme.of(context).hintColor)),
+          //       Text('Executives',
+          //           style: Theme.of(context).textTheme.bodyText1),
+          //     ],
+          //   ),
+          // ),
+          // CarouselSlider(
+          //   items: List.generate(22, (index) => index + 1)
+          //       .map((e) => Column(
+          //             children: [
+          //               Expanded(
+          //                 child: Container(
+          //                   margin: EdgeInsets.fromLTRB(0, 20, 10, 20),
+          //                   width: width,
+          //                   height: 250,
+          //                   child: ClipRRect(
+          //                     borderRadius: BorderRadius.circular(8),
+          //                     child: Image.asset(
+          //                       'assets/executives/$e.jpeg',
+          //                       fit: BoxFit.cover,
+          //                       alignment: Alignment.topCenter,
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //               Padding(
+          //                 padding: const EdgeInsets.symmetric(horizontal: 10),
+          //                 child: Column(
+          //                   children: [
+          //                     Text(
+          //                         names.entries
+          //                             .firstWhere((element) => element.key == e)
+          //                             .value
+          //                             .name,
+          //                         textAlign: TextAlign.center,
+          //                         style: Theme.of(context)
+          //                             .textTheme
+          //                             .bodyText2
+          //                             ?.copyWith(fontSize: 20)),
+          //                     SizedBox(height: 3),
+          //                     Text(
+          //                       names.entries
+          //                           .firstWhere((element) => element.key == e)
+          //                           .value
+          //                           .position,
+          //                       textAlign: TextAlign.center,
+          //                       style: Theme.of(context)
+          //                           .textTheme
+          //                           .bodyText2
+          //                           ?.copyWith(
+          //                               fontSize: 17, color: Colors.black54),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               )
+          //             ],
+          //           ))
+          //       .toList(),
+          //   options: CarouselOptions(
+          //     autoPlay: true,
+          //     height: 350,
+          //     enableInfiniteScroll: true,
+          //     viewportFraction: 0.8,
+          //     enlargeCenterPage: true,
+          //     autoPlayAnimationDuration: Duration(seconds: 1),
+          //   ),
+          // ),
           SizedBox(height: 30),
           Align(
             alignment: Alignment.centerLeft,
@@ -256,4 +355,11 @@ class Executives {
   String position;
 
   Executives({required this.name, required this.position});
+}
+
+class NavButton {
+  String title;
+  IconData icon;
+  String route;
+  NavButton({required this.title, required this.icon, required this.route});
 }

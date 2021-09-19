@@ -1,5 +1,7 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/screens/young_engineers/panelists.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
+import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -80,6 +82,9 @@ class YoungEngineersHome extends StatelessWidget {
               color: Theme.of(context).hintColor,
             ),
             trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, YoungEngineersSpeakers.routeName);
+            },
           ),
           Padding(
             padding: EdgeInsets.only(left: 70, right: 20),
@@ -103,6 +108,9 @@ class YoungEngineersHome extends StatelessWidget {
               color: Theme.of(context).hintColor,
             ),
             trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, YoungEngineersPanelists.routeName);
+            },
           ),
           Padding(
             padding: EdgeInsets.only(left: 70, right: 20),

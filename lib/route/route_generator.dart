@@ -7,7 +7,10 @@ import 'package:apwen/screens/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/topic_brief.dart';
 import 'package:apwen/screens/topics_speakers.dart';
+import 'package:apwen/screens/young_engineers/p_and_s_about.dart';
+import 'package:apwen/screens/young_engineers/panelists.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
+import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +69,23 @@ class RouteGenerator {
         return CupertinoPageRoute(builder: (_) => YoungEngineersSchedule());
       case AboutAPWEN.routeName:
         return MaterialPageRoute(builder: (_) => AboutAPWEN());
+      case YoungEngineersPanelists.routeName:
+        return CupertinoPageRoute(builder: (_) => YoungEngineersPanelists());
+      case YoungEngineersSpeakers.routeName:
+        return CupertinoPageRoute(builder: (_) => YoungEngineersSpeakers());
+      case YoungEngineersPAndSAbout.routeName:
+        if (args is Map)
+          return CupertinoPageRoute(
+            builder: (_) => YoungEngineersPAndSAbout(
+              index: args['index'],
+              path: args['path'],
+              about: args['about'],
+              subAbout: args['subAbout'],
+              name: args['name'],
+            ),
+          );
+        else
+          return errorPage(settings);
 
       default:
         return errorPage(settings);

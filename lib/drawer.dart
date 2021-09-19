@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String selected = 'Home';
+String selected = '/';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -187,11 +187,11 @@ class _AppDrawerState extends State<AppDrawer> {
   appDrawerButton({required String name, required String path}) {
     return TextButton(
       onPressed: () {
-        if (selected == name) {
+        if (selected == path) {
           Navigator.pop(context);
         } else {
           setState(() {
-            selected = name;
+            selected = path;
           });
           Navigator.of(context).pushReplacementNamed(
             path,
@@ -203,7 +203,7 @@ class _AppDrawerState extends State<AppDrawer> {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         width: double.infinity,
         decoration: BoxDecoration(
-            border: selected == name
+            border: selected == path
                 ? Border.all(
                     color: Color(0xFF1C293D),
                   )
