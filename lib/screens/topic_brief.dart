@@ -200,12 +200,13 @@ class _TopicBriefState extends State<TopicBrief> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Topic',
+                                    'Theme',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1
                                         ?.copyWith(
-                                            fontSize: 27,
+                                            fontSize: 23,
+                                            fontFamily: 'Lato',
                                             color: Theme.of(context).hintColor,
                                             letterSpacing: 1),
                                   ),
@@ -213,8 +214,13 @@ class _TopicBriefState extends State<TopicBrief> {
                                 SizedBox(height: 8),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(widget.topic,
-                                      style: TextStyle(fontSize: 20)),
+                                  child: Text(
+                                      widget.topic.isEmpty
+                                          ? 'Women Engineers Driving Digital Transformation in Nigeria'
+                                          : widget.topic,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontFamily: 'Montserrat')),
                                 ),
                                 SizedBox(height: 20),
                                 Align(

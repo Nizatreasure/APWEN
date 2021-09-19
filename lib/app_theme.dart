@@ -7,6 +7,7 @@ ThemeData lightTheme = ThemeData(
   buttonColor: Color(0xFF1C293D),
   splashColor: Colors.transparent,
   hoverColor: Colors.transparent,
+  highlightColor: Colors.transparent,
   textTheme: TextTheme(
       bodyText1: TextStyle(
           color: Color(0xFF1C293D),

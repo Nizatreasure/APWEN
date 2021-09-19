@@ -63,51 +63,41 @@ class _SponsorsState extends State<Sponsors> {
       body: LayoutBuilder(builder: (context, viewport1) {
         return Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  child: CarouselSlider(
-                    items: [1, 2, 3, 4, 5]
-                        .map(
-                          (e) => Image.asset(
-                            'assets/sponsors/$e.jpg',
-                            fit: BoxFit.contain,
-                          ),
-                        )
-                        .toList(),
-                    options: CarouselOptions(
-                        autoPlay: true,
-                        enableInfiniteScroll: true,
-                        height:
-                            viewport1.maxHeight - viewport1.maxHeight * 0.15,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                        autoPlayAnimationDuration: Duration(seconds: 1),
-                        onPageChanged: (num, _) {
-                          setState(() {
-                            currentSponsor = num.toDouble();
-                          });
-                        }),
-                  ),
-                ),
-                Positioned(
-                  bottom: -15,
-                  child: DotsIndicator(
-                    dotsCount: 5,
-                    position: currentSponsor,
-                    decorator: DotsDecorator(
-                        activeColor: Color(0xFFF1592D),
-                        color: Color(0xFF1C293D),
-                        size: Size.square(10),
-                        activeSize: Size.square(14),
-                        spacing: EdgeInsets.all(8)),
-                  ),
-                ),
-              ],
+            Container(
+              child: CarouselSlider(
+                items: [1, 2, 3, 4, 5]
+                    .map(
+                      (e) => Image.asset(
+                        'assets/sponsors/$e.jpg',
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                    autoPlay: true,
+                    enableInfiniteScroll: true,
+                    height: viewport1.maxHeight - viewport1.maxHeight * 0.2,
+                    viewportFraction: 1,
+                    enlargeCenterPage: true,
+                    autoPlayAnimationDuration: Duration(seconds: 1),
+                    onPageChanged: (num, _) {
+                      setState(() {
+                        currentSponsor = num.toDouble();
+                      });
+                    }),
+              ),
             ),
-            SizedBox(height: viewport1.maxHeight * 0.15),
+            SizedBox(height: 10),
+            DotsIndicator(
+              dotsCount: 5,
+              position: currentSponsor,
+              decorator: DotsDecorator(
+                  activeColor: Color(0xFFF1592D),
+                  color: Color(0xFF1C293D),
+                  size: Size.square(10),
+                  activeSize: Size.square(14),
+                  spacing: EdgeInsets.all(8)),
+            ),
           ],
         );
       }),

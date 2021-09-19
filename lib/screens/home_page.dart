@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     2: Executives(
         name: 'Engr. Dr. Eterigho Elizabeth, FNSE', position: 'Vice President'),
     3: Executives(
-        name: 'Engr. CHinyere Igwegbe, FNSE', position: 'General Secretary'),
+        name: 'Engr. Chinyere Igwegbe, FNSE', position: 'General Secretary'),
     4: Executives(
         name: 'Engr. Linda Nnodi, MNSE', position: 'Asst. Gen. Secretary'),
     5: Executives(

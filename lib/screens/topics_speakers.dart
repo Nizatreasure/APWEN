@@ -57,7 +57,10 @@ class _TopicsSpeakersState extends State<TopicsSpeakers> {
       ),
       endDrawer: AppDrawer(),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Speakers').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('Speakers')
+            .orderBy('name')
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.none ||
               snapshot.connectionState == ConnectionState.waiting)
@@ -138,33 +141,18 @@ class _TopicsSpeakersState extends State<TopicsSpeakers> {
               title: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  doc['topic'] ?? '',
-                  style: TextStyle(fontSize: 20),
+                  doc['name'] ?? '',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               subtitle: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(right: 30),
-                        child: Text(doc['date'] ?? '',
-                            style: TextStyle(fontSize: 15))),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          doc['name'] ?? '',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(top: 4, left: 10),
+                  child: Text(
+                    doc['title'] ?? '',
+                    style: TextStyle(fontSize: 15),
+                  )),
+              trailing: Icon(Icons.arrow_forward_ios),
             ),
             if (index != 21)
               Padding(

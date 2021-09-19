@@ -109,11 +109,11 @@ class AboutSpeaker extends StatelessWidget {
               children: [
                 Text('About',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 25, color: Theme.of(context).hintColor)),
+                        fontSize: 23, color: Theme.of(context).hintColor)),
                 SizedBox(height: 12),
                 Text(
                   aboutSpeaker,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 17, fontFamily: 'Lato'),
                 ),
                 SizedBox(height: 20)
               ],

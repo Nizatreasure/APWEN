@@ -1,9 +1,15 @@
+import 'package:apwen/screens/about_apwen.dart';
 import 'package:apwen/screens/about_speakers.dart';
 import 'package:apwen/screens/comments.dart';
 import 'package:apwen/screens/home_page.dart';
+import 'package:apwen/screens/programme.dart';
+import 'package:apwen/screens/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/topic_brief.dart';
 import 'package:apwen/screens/topics_speakers.dart';
+import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
+import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -22,7 +28,7 @@ class RouteGenerator {
         );
       case AboutSpeaker.routeName:
         if (args is Map)
-          return MaterialPageRoute(
+          return CupertinoPageRoute(
             builder: (_) => AboutSpeaker(
               index: args['index'],
               aboutSpeaker: args['aboutSpeakers'],
@@ -33,7 +39,7 @@ class RouteGenerator {
         return errorPage(settings);
       case TopicBrief.routeName:
         if (args is Map)
-          return MaterialPageRoute(
+          return CupertinoPageRoute(
             builder: (_) => TopicBrief(
                 index: args['index'],
                 aboutSpeaker: args['aboutSpeaker'],
@@ -50,6 +56,16 @@ class RouteGenerator {
         return errorPage(settings);
       case Sponsors.routeName:
         return MaterialPageRoute(builder: (_) => Sponsors());
+      case Programme.routeName:
+        return MaterialPageRoute(builder: (_) => Programme());
+      case SocialEvents.routeName:
+        return MaterialPageRoute(builder: (_) => SocialEvents());
+      case YoungEngineersHome.routeName:
+        return MaterialPageRoute(builder: (_) => YoungEngineersHome());
+      case YoungEngineersSchedule.routeName:
+        return CupertinoPageRoute(builder: (_) => YoungEngineersSchedule());
+      case AboutAPWEN.routeName:
+        return MaterialPageRoute(builder: (_) => AboutAPWEN());
 
       default:
         return errorPage(settings);
