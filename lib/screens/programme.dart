@@ -36,15 +36,6 @@ class _ProgrammeState extends State<Programme> {
         int progress = data[2];
         progress = progress < 0 ? 0 : progress;
 
-        if (status == DownloadTaskStatus.running ||
-            status == DownloadTaskStatus(2) ||
-            status == DownloadTaskStatus.enqueued ||
-            status == DownloadTaskStatus(1))
-          Fluttertoast.showToast(
-              msg: 'Downloading $progress%',
-              backgroundColor: Color(0xFF1C293D),
-              textColor: Colors.white);
-
         if (status == DownloadTaskStatus.complete ||
             status == DownloadTaskStatus(3))
           Fluttertoast.showToast(
@@ -73,6 +64,7 @@ class _ProgrammeState extends State<Programme> {
           : await getApplicationDocumentsDirectory();
 
       localPath = downloadPath.path;
+      print(localPath);
 
       bool exists =
           await File(localPath + Platform.pathSeparator + fileName + '.pdf')
@@ -133,18 +125,18 @@ class _ProgrammeState extends State<Programme> {
               style:
                   Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 21),
               children: [
+                TextSpan(text: 'P'),
                 TextSpan(text: 'R'),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'S'),
                 TextSpan(text: 'O'),
+                TextSpan(text: 'G'),
                 TextSpan(
-                  text: 'U',
+                  text: 'R',
                   style: TextStyle(color: Theme.of(context).hintColor),
                 ),
-                TextSpan(text: 'R'),
-                TextSpan(text: 'C'),
+                TextSpan(text: 'A'),
+                TextSpan(text: 'M'),
+                TextSpan(text: 'M'),
                 TextSpan(text: 'E'),
-                TextSpan(text: 'S'),
               ],
             ),
           ),
@@ -349,16 +341,21 @@ class _ProgrammeState extends State<Programme> {
         barrierDismissible: false,
         builder: (context) {
           return Dialog(
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Text('Getting resources. Please wait...'),
                 ),
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(),
+                  ),
                 )
               ],
             ),

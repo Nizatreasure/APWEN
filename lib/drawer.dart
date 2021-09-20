@@ -98,7 +98,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 path: SocialEvents.routeName),
                             SizedBox(height: 10),
                             appDrawerButton(
-                                name: 'Resources', path: Programme.routeName),
+                                name: 'Programme', path: Programme.routeName),
                             SizedBox(height: 10),
                             appDrawerButton(
                                 name: 'Young Engineers',

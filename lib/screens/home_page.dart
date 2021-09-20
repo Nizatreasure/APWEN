@@ -6,8 +6,10 @@ import 'package:apwen/screens/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -20,60 +22,68 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  late TapGestureRecognizer _gestureRecognizer;
 
-  Map<int, Executives> names = {
-    1: Executives(name: 'Engr. Funmilola Ojelade, FNSE', position: 'President'),
-    2: Executives(
-        name: 'Engr. Dr. Eterigho Elizabeth, FNSE', position: 'Vice President'),
-    3: Executives(
-        name: 'Engr. Chinyere Igwegbe, FNSE', position: 'General Secretary'),
-    4: Executives(
-        name: 'Engr. Linda Nnodi, MNSE', position: 'Asst. Gen. Secretary'),
-    5: Executives(
-        name: 'Engr. Dr. Imhade P. Okokpujie, MNSE',
-        position: 'Nat. Tech. Secretary'),
-    6: Executives(
-        name: 'Engr. Laolu Adedapo-Aisida, FNSE',
-        position: 'Financial Secretary'),
-    7: Executives(name: 'Engr. Sylvia Kelechi, MNSE', position: 'Treasurer'),
-    8: Executives(
-        name: 'Engr. Bosede Oyekunle, MNSE', position: 'Publicity Secretary'),
-    9: Executives(name: 'Engr. Evangeline Ekoh, MNSE', position: 'Ex-Officio'),
-    10: Executives(name: 'Engr. Dr. Zainab Yunusa, MNSE', position: ''),
-    11: Executives(
-        name: 'Engr. Anthonia Oyebode, MNSE', position: 'Ex-Officio'),
-    12: Executives(
-        name: 'Engr. Maryjane Okoli, MNSE', position: 'Internal Auditor'),
-    13: Executives(
-        name: 'Engr. Dr. Felicia Nnenna Agubata, FNSE',
-        position: 'Imm. Past President'),
-    14: Executives(
-        name: 'Engr. Chinelo Ojukwu, MNSE',
-        position: 'North-Central Zonal Administrator'),
-    15: Executives(
-        name: 'Engr. Kori Shettima, MNSE',
-        position: 'North-East Zonal Administrator'),
-    16: Executives(
-        name: 'Engr. Binta Usman, PhD',
-        position: 'North-West Zonal Adminstrator'),
-    17: Executives(
-        name: 'Engr. Josephine O. Ezekwerembah',
-        position: 'South-east Zonal Administrator'),
-    18: Executives(
-        name: 'Engr. Mojirade Oloruntoba, FNSE',
-        position: 'South-West Zonal Administrator'),
-    19: Executives(
-        name: 'Engr. Dr. Adebisi Osim, MNSE',
-        position: 'South-South Zonal Administrator'),
-    20: Executives(
-        name: 'Engr. Ummulkhair Mukhtar Tajo',
-        position: 'Young Engineers Coordinator'),
-    21: Executives(
-        name: 'Engr. Oduwa Agboneni, MNSE', position: 'Brand Ambassador'),
-    22: Executives(
-        name: 'Engr. Zansi Adebowale, MNSE',
-        position: 'Strategic Brand Director')
-  };
+  Future<void> openUrl(String url, BuildContext context) async {
+    if (await canLaunch(url))
+      launch(url);
+    else
+      showError(context);
+  }
+
+  // Map<int, Executives> names = {
+  //   1: Executives(name: 'Engr. Funmilola Ojelade, FNSE', position: 'President'),
+  //   2: Executives(
+  //       name: 'Engr. Dr. Eterigho Elizabeth, FNSE', position: 'Vice President'),
+  //   3: Executives(
+  //       name: 'Engr. Chinyere Igwegbe, FNSE', position: 'General Secretary'),
+  //   4: Executives(
+  //       name: 'Engr. Linda Nnodi, MNSE', position: 'Asst. Gen. Secretary'),
+  //   5: Executives(
+  //       name: 'Engr. Dr. Imhade P. Okokpujie, MNSE',
+  //       position: 'Nat. Tech. Secretary'),
+  //   6: Executives(
+  //       name: 'Engr. Laolu Adedapo-Aisida, FNSE',
+  //       position: 'Financial Secretary'),
+  //   7: Executives(name: 'Engr. Sylvia Kelechi, MNSE', position: 'Treasurer'),
+  //   8: Executives(
+  //       name: 'Engr. Bosede Oyekunle, MNSE', position: 'Publicity Secretary'),
+  //   9: Executives(name: 'Engr. Evangeline Ekoh, MNSE', position: 'Ex-Officio'),
+  //   10: Executives(name: 'Engr. Dr. Zainab Yunusa, MNSE', position: ''),
+  //   11: Executives(
+  //       name: 'Engr. Anthonia Oyebode, MNSE', position: 'Ex-Officio'),
+  //   12: Executives(
+  //       name: 'Engr. Maryjane Okoli, MNSE', position: 'Internal Auditor'),
+  //   13: Executives(
+  //       name: 'Engr. Dr. Felicia Nnenna Agubata, FNSE',
+  //       position: 'Imm. Past President'),
+  //   14: Executives(
+  //       name: 'Engr. Chinelo Ojukwu, MNSE',
+  //       position: 'North-Central Zonal Administrator'),
+  //   15: Executives(
+  //       name: 'Engr. Kori Shettima, MNSE',
+  //       position: 'North-East Zonal Administrator'),
+  //   16: Executives(
+  //       name: 'Engr. Binta Usman, PhD',
+  //       position: 'North-West Zonal Adminstrator'),
+  //   17: Executives(
+  //       name: 'Engr. Josephine O. Ezekwerembah',
+  //       position: 'South-east Zonal Administrator'),
+  //   18: Executives(
+  //       name: 'Engr. Mojirade Oloruntoba, FNSE',
+  //       position: 'South-West Zonal Administrator'),
+  //   19: Executives(
+  //       name: 'Engr. Dr. Adebisi Osim, MNSE',
+  //       position: 'South-South Zonal Administrator'),
+  //   20: Executives(
+  //       name: 'Engr. Ummulkhair Mukhtar Tajo',
+  //       position: 'Young Engineers Coordinator'),
+  //   21: Executives(
+  //       name: 'Engr. Oduwa Agboneni, MNSE', position: 'Brand Ambassador'),
+  //   22: Executives(
+  //       name: 'Engr. Zansi Adebowale, MNSE',
+  //       position: 'Strategic Brand Director')
+  // };
   List<NavButton> nav = [
     NavButton(
         title: 'Speakers',
@@ -84,7 +94,7 @@ class _HomePageState extends State<HomePage> {
         icon: FontAwesomeIcons.calendarAlt,
         route: YoungEngineersSchedule.routeName),
     NavButton(
-        title: 'Resources',
+        title: 'Programme',
         icon: FontAwesomeIcons.filePdf,
         route: Programme.routeName),
     NavButton(
@@ -98,6 +108,15 @@ class _HomePageState extends State<HomePage> {
         icon: FontAwesomeIcons.infoCircle,
         route: AboutAPWEN.routeName),
   ];
+
+  @override
+  void initState() {
+    _gestureRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        openUrl('https://www.apwen.org', context);
+      };
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -353,50 +372,37 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Vision',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 25, color: Theme.of(context).hintColor),
+                  RichText(
+                    textAlign: TextAlign.justify,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontWeight: FontWeight.normal,
+                            height: 1.5,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: 'The APWEN Conference ',
+                          style: TextStyle(
+                              color: Theme.of(context).hintColor,
+                              fontSize: 18,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(
+                            text:
+                                'is an annual event organised by the Association of Professional Women Engineers (APWEN) . APWEN conferences focus on collecting and encouraging the dissemination of technical knowledge and technologies related to Engineering and Technology with special emphasis on female Engineers. Over the years APWEN conference has grown to become the largest  gathering of Female Engineers  in Africa, attracting captains of industry, the academia, regulators, high level government officials and other key industry stakeholders.\n'),
+                        TextSpan(
+                            text:
+                                'APWEN is hosting her 2021 edition of the annual Conference from September 20th to 23rd, 2021, at the Nile University Abuja, FCT.  The theme of the 2021 conference is " *Women Engineers Driving Digital Transformation in Nigeria* ”.\n\n'),
+                        TextSpan(text: 'Register at'),
+                        TextSpan(
+                            text: '  www.apwen.org',
+                            style: TextStyle(color: Colors.blue),
+                            recognizer: _gestureRecognizer),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    'To be the catalyst for advancement of women in the engineering profession towards national and global technological development.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.normal, height: 1.4),
-                  ),
-                  SizedBox(height: 40),
-                  Text(
-                    'Mission',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 25, color: Theme.of(context).hintColor),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'To continuously increase awareness that engineering is a career for girls also, thereby improving the numerical strength of female engineers.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.normal, height: 1.4),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'To encourage women to achieve professional excellence as engineers and leaders.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.normal, height: 1.4),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'To promote the engineering profession as a positive force in enhancing the quality of life.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.normal, height: 1.4),
-                  ),
-                  SizedBox(height: 20)
+                  SizedBox(height: 30)
                 ],
               ),
             ),

@@ -47,7 +47,9 @@
     <application
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/app_icon"
-        android:label="APWEN 2021" >
+        android:label="APWEN 2021"
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.apwen.apwen.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -95,7 +97,8 @@
             android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
             android:authorities="com.apwen.apwen.flutter_downloader.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true"
+            android:requestLegacyExternalStorage="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />

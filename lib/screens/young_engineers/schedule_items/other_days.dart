@@ -16,31 +16,31 @@ class _OtherDaysState extends State<OtherDays> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('young_engineers')
-              .doc('young_engineers')
-              .collection(widget.day)
-              .orderBy('time')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none ||
-                snapshot.connectionState == ConnectionState.waiting)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text(
-                  'No programme',
-                  style: TextStyle(color: Colors.black),
-                ),
-              );
-            }
+        stream: FirebaseFirestore.instance
+            .collection('young_engineers')
+            .doc('young_engineers')
+            .collection(widget.day)
+            .orderBy('time')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.none ||
+              snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                'No programme',
+                style: TextStyle(color: Colors.black),
+              ),
+            );
+          }
 
-            return ListView(
-              children: [
-                SizedBox(height: 20),
+          return ListView(
+            children: [
+              SizedBox(height: 20),
+              if (snapshot.data!.docs.first['theme'].toString().isNotEmpty)
                 Text(
                   snapshot.data!.docs.first['theme'].toString().toUpperCase(),
                   style: TextStyle(
@@ -48,11 +48,13 @@ class _OtherDaysState extends State<OtherDays> {
                       fontFamily: 'Montserrat',
                       fontSize: 20),
                 ),
+              if (snapshot.data!.docs.first['theme'].toString().isNotEmpty)
                 SizedBox(height: 25),
-                _buildCards(snapshot.data!.docs)
-              ],
-            );
-          }),
+              _buildCards(snapshot.data!.docs)
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -162,6 +164,30 @@ class _OtherDaysState extends State<OtherDays> {
                     ),
                   ),
                   SizedBox(height: 6),
+                  if (((doc['venue'] ?? '') as String).isNotEmpty)
+                    Row(
+                      children: [
+                        Text(
+                          'Venue:',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            doc['venue'],
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (((doc['venue'] ?? '') as String).isNotEmpty)
+                    SizedBox(height: 8),
                   if (((doc['resource_persons'] ?? []) as List).isNotEmpty)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

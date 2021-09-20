@@ -1,5 +1,6 @@
 import 'package:apwen/drawer.dart';
 import 'package:apwen/screens/young_engineers/panelists.dart';
+import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,32 @@ class YoungEngineersHome extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.pushNamed(context, YoungEngineersSchedule.routeName);
+            },
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 70, right: 20),
+            child: Divider(color: Colors.black, height: 10),
+          ),
+          ListTile(
+            title: Text(
+              'Q&A Links',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF1C293D),
+                  fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text(
+              'Got any question? Ask!',
+              style: TextStyle(fontSize: 17),
+            ),
+            leading: Icon(
+              FontAwesomeIcons.question,
+              size: 32,
+              color: Theme.of(context).hintColor,
+            ),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, Questions.routeName);
             },
           ),
         ],

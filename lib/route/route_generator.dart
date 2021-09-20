@@ -9,6 +9,7 @@ import 'package:apwen/screens/topic_brief.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/p_and_s_about.dart';
 import 'package:apwen/screens/young_engineers/panelists.dart';
+import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
@@ -45,12 +46,12 @@ class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => TopicBrief(
                 index: args['index'],
-                aboutSpeaker: args['aboutSpeaker'],
-                aboutTopic: args['aboutTopic'],
+                aboutSpeaker: args['aboutSpeaker'] ?? '',
+                aboutTopic: args['aboutTopic'] ?? '',
                 id: args['id'],
-                image: args['image'],
-                name: args['name'],
-                topic: args['topic']),
+                image: args['image'] ?? '',
+                name: args['name'] ?? '',
+                topic: args['topic'] ?? ''),
           );
         return errorPage(settings);
       case Comments.routeName:
@@ -77,15 +78,17 @@ class RouteGenerator {
         if (args is Map)
           return CupertinoPageRoute(
             builder: (_) => YoungEngineersPAndSAbout(
-              index: args['index'],
-              path: args['path'],
-              about: args['about'],
-              subAbout: args['subAbout'],
-              name: args['name'],
-            ),
+                index: args['index'],
+                path: args['path'] ?? '',
+                about: args['about'] ?? [],
+                subAbout: args['subAbout'] ?? [],
+                name: args['name'] ?? '',
+                proseAbout: args['proseAbout'] ?? ''),
           );
         else
           return errorPage(settings);
+      case Questions.routeName:
+        return CupertinoPageRoute(builder: (_) => Questions());
 
       default:
         return errorPage(settings);

@@ -7,13 +7,15 @@ class YoungEngineersPAndSAbout extends StatelessWidget {
   final String name;
   final List about;
   final List subAbout;
+  final String proseAbout;
   const YoungEngineersPAndSAbout(
       {Key? key,
       required this.index,
       required this.path,
       required this.name,
       required this.about,
-      required this.subAbout})
+      required this.subAbout,
+      this.proseAbout = ''})
       : super(key: key);
 
   @override
@@ -113,13 +115,22 @@ class YoungEngineersPAndSAbout extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 23, color: Theme.of(context).hintColor)),
                 SizedBox(height: 12),
-                Column(
-                  children: about.map((e) => _buildBulletList(e)).toList(),
-                ),
-                SizedBox(height: 7),
-                if (subAbout.isNotEmpty)
+                if (proseAbout.isEmpty)
+                  Column(
+                    children: about.map((e) => _buildBulletList(e)).toList(),
+                  ),
+                if (proseAbout.isEmpty && subAbout.isNotEmpty)
+                  SizedBox(height: 7),
+                if (proseAbout.isEmpty && subAbout.isNotEmpty)
                   Column(
                     children: subAbout.map((e) => _buildSubAbout(e)).toList(),
+                  ),
+                if (proseAbout.isNotEmpty)
+                  Text(
+                    proseAbout,
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, height: 1.4),
+                    textAlign: TextAlign.justify,
                   )
               ],
             ),

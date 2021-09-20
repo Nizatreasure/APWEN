@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 provider#vn.hunghd.flutterdownloader.DownloadedFileProvider
 INJECTED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:48:5-50:16
+	android:requestLegacyExternalStorage
+		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:48:208-251
 	android:grantUriPermissions
 		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:48:173-207
 	android:authorities
@@ -168,12 +170,16 @@ MERGED from [androidx.room:room-runtime:2.2.5] C:\Users\NIZA\.gradle\caches\tran
 MERGED from [androidx.room:room-runtime:2.2.5] C:\Users\NIZA\.gradle\caches\transforms-2\files-2.1\c9e3c28defc522dfb99ecde4d2003a75\room-runtime-2.2.5\AndroidManifest.xml:24:5-29:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\NIZA\.gradle\caches\transforms-2\files-2.1\ff60b25419edc5e682541efdbdc701d8\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\NIZA\.gradle\caches\transforms-2\files-2.1\ff60b25419edc5e682541efdbdc701d8\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+	android:requestLegacyExternalStorage
+		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:75-118
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.5.0] C:\Users\NIZA\.gradle\caches\transforms-2\files-2.1\5600aad99d3e6b3c713a2bae332fa275\core-1.5.0\AndroidManifest.xml:24:18-86
 	android:label
 		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:16-42
 	android:icon
 		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:43-74
+	android:usesCleartextTraffic
+		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:119-154
 activity#com.apwen.apwen.MainActivity
 ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:28:5-44:16
 	android:screenOrientation

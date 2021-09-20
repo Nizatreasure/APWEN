@@ -66,7 +66,8 @@ class YoungEngineersPanelists extends StatelessWidget {
                         'path': 'y_panelists/${index + 1}.jpg',
                         'about': panelists[index].about,
                         'subAbout': panelists[index].subAbout,
-                        'name': panelists[index].name
+                        'name': panelists[index].name,
+                        'proseAbout': panelists[index].proseAbout
                       });
                 },
                 title: Padding(
@@ -166,7 +167,13 @@ class YoungEngineersPanelists extends StatelessWidget {
         'Currently working on the GE 84 Plan Optimization Project for Africa, an ITU & ATU initiative',
         'Volunteer, SciETech academic program & Counsellor/adviser for girls and youth in STEM'
       ],
-    )
+    ),
+    YEPanelistsAndSpeakers(
+        name: 'Philomena Chijindu Aneke',
+        title: 'Digital and Technology Director, Nigeria Breweries PLC.',
+        about: [],
+        proseAbout:
+            'Philomena Chijindu Aneke is the Digital and Technology Director of Nigerian Breweries Plc. She is a life-long learner and coach who has a track record of work experience and achievements in change management projects, ERP (Enterprise Resource Programme) implementations, finance/accounting, procurement, supply chain controlling and digital transformation roles. Phil holds an Executive MSc in Logistics and Supply Chain Management from the prestigious Cranfield University, United Kingdom. She is a graduate of Accounting from the University of Port-Harcourt, Nigeria, a fellow of ICAN and has attended numerous local and international training courses. Her professional experience includes an expatriation stint to the Heineken head office in Amsterdam. Where as the BASE Programme Manager she led a multi-cultural/functional team of over 40 persons to design, construct a template ERP and implement this with changes in way of working in 14 Heineken operating companies in Africa, Middle East and the Caribbean from 2016 till August 2020. As D&T Director in Nigerian Breweries since Sept 2020; Phil is leading her team to demystify digital within the company and co-identify digitization and automation opportunities that can drive the digital agenda and ensure seamless stakeholder interactions.')
   ];
 }
 
@@ -175,9 +182,11 @@ class YEPanelistsAndSpeakers {
   String name;
   List<String> about;
   List<String> subAbout;
+  String proseAbout;
   YEPanelistsAndSpeakers(
       {required this.name,
       required this.title,
       required this.about,
-      this.subAbout = const []});
+      this.subAbout = const [],
+      this.proseAbout = ''});
 }
