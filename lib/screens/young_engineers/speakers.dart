@@ -6,22 +6,6 @@ class YoungEngineersSpeakers extends StatelessWidget {
   static const String routeName = '/youngengineersspeakers';
   YoungEngineersSpeakers({Key? key}) : super(key: key);
 
-  final List<YEPanelistsAndSpeakers> speakers = [
-    YEPanelistsAndSpeakers(
-        name: 'Senami Johnson-Amusu',
-        title:
-            'Founder, Growwest - An EdTech Financial Literacy and Investment Company.',
-        about: []),
-    YEPanelistsAndSpeakers(
-        name: 'Roseline Cletus Igah',
-        title: 'Head, IT Solutions Delivery, Unified Payment Serivces Ltd.',
-        about: []),
-    YEPanelistsAndSpeakers(
-        name: 'Tolu Dima-Okojie',
-        title: 'Managing Partner, Kola Akomolede & Company.',
-        about: [])
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +65,8 @@ class YoungEngineersSpeakers extends StatelessWidget {
                         'index': index,
                         'path': 'y_speakers/${index + 1}.jpg',
                         'about': speakers[index].about,
-                        'subAbout': speakers[index].subAbout
+                        'subAbout': speakers[index].subAbout,
+                        'name': speakers[index].name
                       });
                 },
                 title: Padding(
@@ -117,4 +102,51 @@ class YoungEngineersSpeakers extends StatelessWidget {
       ),
     );
   }
+
+  final List<YEPanelistsAndSpeakers> speakers = [
+    YEPanelistsAndSpeakers(
+        name: 'Senami Johnson-Amusu',
+        title:
+            'Founder, Growwest - An EdTech Financial Literacy and Investment Company.',
+        about: [
+          'Founder, Growvest - an EdTech financial literacy and investment community',
+          'Founder, Growvest - an EdTech financial literacy and investment community',
+          'Previously Group Head, Listings & Quotations FMDQ Exchange; & Head, Corporate Finance, Sterling Bank Plc.',
+          'Holds certifications in corporate governance, leadership and strategic direction.',
+          'Serves as board adviser for 2 startups',
+          'Holds MSc in Finance from the Rochester Institute of Technology, New York: and BSc in Economics from the Obafemi Awolowo University.',
+          'Recognized in the “Top 100 Career Women in Nigeria 2021”',
+          'Passionate about helping women to strategically attain commanding heights in business and leadership',
+          'Associate Member and serves under various mentorship capacities in WIMBIZ - Women in Management and Business.',
+          'Enjoys watching stage plays at Terra Culture, reading a good novel & running half marathons.'
+        ]),
+    YEPanelistsAndSpeakers(
+        name: 'Roseline Cletus Igah',
+        title: 'Head, IT Solutions Delivery, Unified Payment Serivces Ltd.',
+        about: [
+          'Group Head, IT Solutions Delivery, Unified Payment Services Ltd formerly known as ValuCard',
+          'Manages a group of IT professionals who day to day work involve innovation, problem solving, critical & analytical thinking and creativity',
+          'Skilled in Project Management, Business Analysis, Solutions implementation and Electronic Payment Systems in MasterCard, Visa, American Express, UnionPay and PayAttitude',
+          'Holds a B.Eng in Mechanical Engineering from Federal University of Technology Minna; and MSc in Engineering and Management from Coventry University UK.',
+          'APWEN International Representative for Society of Women Engineers (SWE) USA',
+          'Obtained a High-Performance Leadership Certificate from Cornel University USA',
+          'Holds the Oracle Certified Professional Certification',
+          'Member, Oracle Institute USA; Member, Project Management Institute USA',
+          'Avid STEM advocate '
+        ]),
+    YEPanelistsAndSpeakers(
+        name: 'Tolu Dima-Okojie',
+        title: 'Managing Partner, Kola Akomolede & Company.',
+        about: [
+          'Managing Partner, Kola Akomolede & Company',
+          'Money Behaviour Strategist & Certified Financial Education Instructor',
+          'Creator, Money Behaviour Quotient [The MBQ] - a tool for assessing how your lifestyle is hindering you or helping you to build wealth',
+          'Founder, Money Map Academy - a finance literacy organization ',
+          'Co-founder, Nestegg Financial Planning & Consultant Ltd',
+          'Works with organizations to train their teams on how to implement life changing money strategies that will increase productivity',
+          'Author of 21 Steps to Move from Broke to More Than Enough',
+          'Registered Real Estate Surveyor & Valuer',
+          'Member, Personal Finance Society & Member, Chartered Insurance Institute (UK)'
+        ])
+  ];
 }

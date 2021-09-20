@@ -198,7 +198,9 @@ int layout notification_template_icon_group 0x7f0a0004
 int layout notification_template_part_chronometer 0x7f0a0005
 int layout notification_template_part_time 0x7f0a0006
 int layout toast_custom 0x7f0a0007
-int mipmap ic_launcher 0x7f0b0000
+int mipmap app_icon 0x7f0b0000
+int mipmap background 0x7f0b0001
+int mipmap ic_launcher 0x7f0b0002
 int string common_google_play_services_enable_button 0x7f0c0000
 int string common_google_play_services_enable_text 0x7f0c0001
 int string common_google_play_services_enable_title 0x7f0c0002

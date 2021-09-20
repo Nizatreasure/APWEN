@@ -171,9 +171,9 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\NI
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.5.0] C:\Users\NIZA\.gradle\caches\transforms-2\files-2.1\5600aad99d3e6b3c713a2bae332fa275\core-1.5.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:16-37
+		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:16-42
 	android:icon
-		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:38-72
+		ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:27:43-74
 activity#com.apwen.apwen.MainActivity
 ADDED from C:\NIZA\Flutter_Projects\apwen\android\app\src\main\AndroidManifest.xml:28:5-44:16
 	android:screenOrientation

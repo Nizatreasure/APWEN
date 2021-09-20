@@ -95,10 +95,13 @@ class AboutSpeaker extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          Center(
-            child: Text(
-              name,
-              style: TextStyle(fontSize: 25),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Center(
+              child: Text(
+                name,
+                style: TextStyle(fontSize: 22),
+              ),
             ),
           ),
           SizedBox(height: 30),
@@ -113,6 +116,7 @@ class AboutSpeaker extends StatelessWidget {
                 SizedBox(height: 12),
                 Text(
                   aboutSpeaker,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(fontSize: 17, fontFamily: 'Lato'),
                 ),
                 SizedBox(height: 20)

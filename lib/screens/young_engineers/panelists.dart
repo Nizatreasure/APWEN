@@ -65,7 +65,8 @@ class YoungEngineersPanelists extends StatelessWidget {
                         'index': index,
                         'path': 'y_panelists/${index + 1}.jpg',
                         'about': panelists[index].about,
-                        'subAbout': panelists[index].subAbout
+                        'subAbout': panelists[index].subAbout,
+                        'name': panelists[index].name
                       });
                 },
                 title: Padding(
@@ -102,7 +103,7 @@ class YoungEngineersPanelists extends StatelessWidget {
     );
   }
 
-  List<YEPanelistsAndSpeakers> panelists = [
+  final List<YEPanelistsAndSpeakers> panelists = [
     YEPanelistsAndSpeakers(
       name: 'Saadat Aliyu',
       title: 'Founder Shamrock Innovations - A Tech Innovation Hub in Kano',
@@ -115,11 +116,11 @@ class YoungEngineersPanelists extends StatelessWidget {
         'Awards & Recognition'
       ],
       subAbout: [
-        '—	60 Women Champions Nigeria; Business Day ',
-        '—	2020 Top 100 Women in Tech; #100WomentoTech Initiative',
-        '—	Top 50 Northern Women in Tech; Jobberman/Startup Kano',
-        '—	Merit Award, Advocating for Women in Technology, Youth Creative Forum.',
-        '—	2021 Inspiring Women in Tech; JobberMan Nigeria'
+        '60 Women Champions Nigeria; Business Day ',
+        '2020 Top 100 Women in Tech; #100WomentoTech Initiative',
+        'Top 50 Northern Women in Tech; Jobberman/Startup Kano',
+        'Merit Award, Advocating for Women in Technology, Youth Creative Forum.',
+        '2021 Inspiring Women in Tech; JobberMan Nigeria'
       ],
     ),
     YEPanelistsAndSpeakers(
@@ -145,12 +146,12 @@ class YoungEngineersPanelists extends StatelessWidget {
           'Awards & Recognition'
         ],
         subAbout: [
-          '—	2021 - Scholar, Nigeria Higher Education Foundation.',
-          '—	2021 - EMEA & Global Scholar to attend Grace Hopper Celebration.',
-          '—	2020 & 2021 - Excellence Officer Award; the Society of Petroleum Engineers (SPE)',
-          '—	2019 - Scholar/Ambassador, Women in Leadership Award; SPE',
-          '—	2018 - Scholar, Agbami Medical and Engineering scholarship.',
-          '—	2017 - National Merit Award from Total E&P.'
+          '2021 - Scholar, Nigeria Higher Education Foundation.',
+          '2021 - EMEA & Global Scholar to attend Grace Hopper Celebration.',
+          '2020 & 2021 - Excellence Officer Award; the Society of Petroleum Engineers (SPE)',
+          '2019 - Scholar/Ambassador, Women in Leadership Award; SPE',
+          '2018 - Scholar, Agbami Medical and Engineering scholarship.',
+          '2017 - National Merit Award from Total E&P.'
         ]),
     YEPanelistsAndSpeakers(
       name: 'Kaltume Giwa',
@@ -158,7 +159,7 @@ class YoungEngineersPanelists extends StatelessWidget {
       about: [
         'Electrical Engineer with specialisation in Electronic/Telecommunication Engineering',
         'Diploma in Radio Frequency Spectrum Management, USA Telecommunications Training Institute',
-        '•	National Vice Chairman, Nigerian Institute of ICT Engineers (NIICTE)',
+        'National Vice Chairman, Nigerian Institute of ICT Engineers (NIICTE)',
         'Pioneer Project Director, APWEN Abuja Biennial Magazine',
         'Works at National Broadcasting Commission - the agency responsible for Broadcast Regulation in Nigeria and ongoing Digital Terrestrial Transition (DTT); i.e.migration from analogue to digital TV broadcasting',
         'Member, Technical Advisory Committee (TAC) on Nigeria\'s participation at International Telecommunication Union (ITU)',

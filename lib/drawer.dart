@@ -43,9 +43,15 @@ class _AppDrawerState extends State<AppDrawer> {
                           height: 140,
                           width: double.infinity,
                           color: Colors.black12,
-                          child: Column(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: Image.asset('assets/logo.png'),
+                              ),
+                              SizedBox(width: 15),
                               RichText(
                                 text: TextSpan(
                                   style: Theme.of(context)

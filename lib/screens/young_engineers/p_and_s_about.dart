@@ -96,9 +96,81 @@ class YoungEngineersPAndSAbout extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    name,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text('About',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 23, color: Theme.of(context).hintColor)),
+                SizedBox(height: 12),
+                Column(
+                  children: about.map((e) => _buildBulletList(e)).toList(),
+                ),
+                SizedBox(height: 7),
+                if (subAbout.isNotEmpty)
+                  Column(
+                    children: subAbout.map((e) => _buildSubAbout(e)).toList(),
+                  )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubAbout(String text) {
+    return Padding(
+      padding: EdgeInsets.only(left: 15, bottom: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Text(
-            name,
-            style: TextStyle(fontSize: 20),
+            '—',
+            style: TextStyle(color: Color(0xFF1C293D)),
+          ),
+          SizedBox(width: 5),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontWeight: FontWeight.normal, height: 1.2, fontSize: 17),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBulletList(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(width: 7),
+          Container(
+            margin: EdgeInsets.only(top: 8, right: 10),
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Color(0xFF1C293D)),
+            height: 10,
+            width: 10,
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.normal, height: 1.4),
+            ),
           ),
         ],
       ),

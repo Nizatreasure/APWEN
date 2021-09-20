@@ -107,24 +107,34 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 25),
-              children: [
-                TextSpan(text: 'A'),
-                TextSpan(text: 'P'),
-                TextSpan(
-                  text: 'W',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: Image.asset('assets/logo.png'),
+              ),
+              SizedBox(width: 20),
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      ?.copyWith(fontSize: 22),
+                  children: [
+                    TextSpan(text: 'A'),
+                    TextSpan(text: 'P'),
+                    TextSpan(
+                      text: 'W',
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                    ),
+                    TextSpan(text: 'E'),
+                    TextSpan(text: 'N'),
+                  ],
                 ),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'N'),
-              ],
-            ),
+              ),
+            ],
           ),
-          // Text('APWEN',
-          //     style: TextStyle(fontSize: 25, fontFamily: 'Montserrat')),
         ),
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -140,6 +150,52 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: [
+          SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyText1?.color),
+                    children: [
+                      TextSpan(
+                        text: '2021',
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontSize: 32,
+                            fontWeight: FontWeight.normal),
+                      ),
+                      TextSpan(text: ' International')
+                    ],
+                  ),
+                ),
+                // Text(
+                //   '2021 International',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(fontSize: 30, fontFamily: 'Montserrat'),
+                // ),
+                Text(
+                  ' Conference &',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontFamily: 'Montserrat',
+                      fontStyle: FontStyle.italic),
+                ),
+                Text(
+                  'Annual General Meeting',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ),
           SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -178,8 +234,10 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(nav[index].icon,
-                            color: Theme.of(context).hintColor),
+                        Icon(
+                          nav[index].icon,
+                          color: Color(0xffddd0df),
+                        ),
                         SizedBox(height: 10),
                         Text(
                           nav[index].title,
@@ -196,8 +254,10 @@ class _HomePageState extends State<HomePage> {
                                   TextStyle(fontSize: 15, color: Colors.white),
                             ),
                             Spacer(),
-                            Icon(Icons.arrow_right_alt,
-                                color: Theme.of(context).hintColor)
+                            Icon(
+                              Icons.arrow_right_alt,
+                              color: Color(0xffddd0df),
+                            )
                           ],
                         )
                       ],
@@ -295,10 +355,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     'Vision',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontSize: 25),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 25, color: Theme.of(context).hintColor),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -309,11 +367,11 @@ class _HomePageState extends State<HomePage> {
                         ?.copyWith(fontWeight: FontWeight.normal, height: 1.4),
                   ),
                   SizedBox(height: 40),
-                  Text('Mission',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(fontSize: 25)),
+                  Text(
+                    'Mission',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 25, color: Theme.of(context).hintColor),
+                  ),
                   SizedBox(height: 10),
                   Text(
                     'To continuously increase awareness that engineering is a career for girls also, thereby improving the numerical strength of female engineers.',
