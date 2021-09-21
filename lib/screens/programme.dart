@@ -372,7 +372,7 @@ class _ProgrammeState extends State<Programme> {
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: Colors.white60,
+          backgroundColor: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
