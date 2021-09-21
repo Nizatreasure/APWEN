@@ -5,6 +5,7 @@ import 'package:apwen/screens/home_page.dart';
 import 'package:apwen/screens/programme.dart';
 import 'package:apwen/screens/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
+import 'package:apwen/screens/stream_live.dart';
 import 'package:apwen/screens/topic_brief.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/p_and_s_about.dart';
@@ -89,6 +90,8 @@ class RouteGenerator {
           return errorPage(settings);
       case Questions.routeName:
         return CupertinoPageRoute(builder: (_) => Questions());
+      case StreamLive.routeName:
+        return CupertinoPageRoute(builder: (_) => StreamLive());
 
       default:
         return errorPage(settings);

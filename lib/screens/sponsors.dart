@@ -48,7 +48,8 @@ class _SponsorsState extends State<Sponsors> {
           ),
         ),
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 1,
+        toolbarHeight: 65,
         actions: [
           IconButton(
             onPressed: () {
@@ -92,11 +93,12 @@ class _SponsorsState extends State<Sponsors> {
               dotsCount: 5,
               position: currentSponsor,
               decorator: DotsDecorator(
-                  activeColor: Color(0xFFF1592D),
-                  color: Color(0xFF1C293D),
-                  size: Size.square(10),
-                  activeSize: Size.square(14),
-                  spacing: EdgeInsets.all(8)),
+                activeColor: Color(0xFFF1592D),
+                color: Color(0xFF1C293D),
+                size: Size.square(10),
+                activeSize: Size.square(14),
+                spacing: EdgeInsets.all(8),
+              ),
             ),
           ],
         );

@@ -24,27 +24,28 @@ class _TopicsSpeakersState extends State<TopicsSpeakers> {
           padding: const EdgeInsets.only(left: 5, top: 5),
           child: RichText(
             text: TextSpan(
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontSize: 25),
-                children: [
-                  TextSpan(text: 'A'),
-                  TextSpan(
-                    text: 'P',
-                  ),
-                  TextSpan(
-                      text: 'W',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
-                  TextSpan(
-                    text: 'E',
-                  ),
-                  TextSpan(text: 'N'),
-                ]),
+              style:
+                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 22),
+              children: [
+                TextSpan(text: 'S'),
+                TextSpan(text: 'P'),
+                TextSpan(text: 'E'),
+                TextSpan(
+                    text: 'A',
+                    style: TextStyle(color: Theme.of(context).hintColor)),
+                TextSpan(
+                  text: 'K',
+                ),
+                TextSpan(text: 'E'),
+                TextSpan(text: 'R'),
+                TextSpan(text: 'S'),
+              ],
+            ),
           ),
         ),
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 1,
+        toolbarHeight: 65,
         actions: [
           IconButton(
             onPressed: () {

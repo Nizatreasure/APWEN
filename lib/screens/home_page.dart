@@ -4,6 +4,7 @@ import 'package:apwen/screens/about_speakers.dart';
 import 'package:apwen/screens/programme.dart';
 import 'package:apwen/screens/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
+import 'package:apwen/screens/stream_live.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:flutter/gestures.dart';
@@ -216,6 +217,30 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, StreamLive.routeName);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue[700]),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                minimumSize: MaterialStateProperty.all(
+                  Size(double.infinity, 45),
+                ),
+              ),
+              child: Text(
+                ' Stream live event',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: GridView.builder(

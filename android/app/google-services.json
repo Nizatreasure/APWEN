@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "529907788317-g3cjg1hup5n2abof8flc1cr8c4huqcf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apwen.apwen",
+            "certificate_hash": "62b3a4c0e2619b191966d56a3fadea20fc3e7360"
+          }
+        },
+        {
           "client_id": "529907788317-26h8naip0d36p3ljukhqc9d246ht83t4.apps.googleusercontent.com",
           "client_type": 3
         }

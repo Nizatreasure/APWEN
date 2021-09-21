@@ -142,7 +142,8 @@ class _ProgrammeState extends State<Programme> {
           ),
         ),
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 1,
+        toolbarHeight: 65,
         actions: [
           IconButton(
             onPressed: () {
@@ -377,7 +378,7 @@ class _ProgrammeState extends State<Programme> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 15),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
                 child: Text('View or download the $fileName'),
               ),
               Row(
@@ -389,7 +390,7 @@ class _ProgrammeState extends State<Programme> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                          horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xFF1C293D),
@@ -418,39 +419,7 @@ class _ProgrammeState extends State<Programme> {
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                        Color(0xFFF1592D),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'View',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (downloadUrl.isNotEmpty) {
-                        Navigator.pop(context);
-                        Fluttertoast.showToast(
-                            msg: 'Downloading',
-                            backgroundColor: Color(0xFF1C293D),
-                            textColor: Colors.white,
-                            toastLength: Toast.LENGTH_LONG);
-                        downloadFiles(
-                            'APWEN_Conference_' + fileName.split(' ').join('_'),
-                            downloadUrl);
-                      } else
-                        Fluttertoast.showToast(
-                            msg: 'Link unavailable. Try again later',
-                            backgroundColor: Color(0xFF1C293D),
-                            textColor: Colors.white,
-                            toastLength: Toast.LENGTH_LONG);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.blue,
+                        Colors.blue[700],
                       ),
                     ),
                     child: Padding(
@@ -461,6 +430,38 @@ class _ProgrammeState extends State<Programme> {
                       ),
                     ),
                   ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     if (downloadUrl.isNotEmpty) {
+                  //       Navigator.pop(context);
+                  //       Fluttertoast.showToast(
+                  //           msg: 'Downloading',
+                  //           backgroundColor: Color(0xFF1C293D),
+                  //           textColor: Colors.white,
+                  //           toastLength: Toast.LENGTH_LONG);
+                  //       downloadFiles(
+                  //           'APWEN_Conference_' + fileName.split(' ').join('_'),
+                  //           downloadUrl);
+                  //     } else
+                  //       Fluttertoast.showToast(
+                  //           msg: 'Link unavailable. Try again later',
+                  //           backgroundColor: Color(0xFF1C293D),
+                  //           textColor: Colors.white,
+                  //           toastLength: Toast.LENGTH_LONG);
+                  //   },
+                  //   style: ButtonStyle(
+                  //     backgroundColor: MaterialStateProperty.all(
+                  //       Colors.blue,
+                  //     ),
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                  //     child: Text(
+                  //       'Download',
+                  //       style: TextStyle(fontSize: 18, color: Colors.white),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               SizedBox(height: 10)
