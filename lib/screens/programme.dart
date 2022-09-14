@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:android_path_provider/android_path_provider.dart';
 import 'package:apwen/drawer.dart';
+import 'package:apwen/screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -155,104 +156,60 @@ class _ProgrammeState extends State<Programme> {
         ],
       ),
       endDrawer: AppDrawer(),
-      body: ListView(
-        children: [
-          SizedBox(height: 25),
-          ListTile(
-            title: Text(
-              'APWEN 2021 Brochure',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF1C293D),
-                  fontWeight: FontWeight.w500),
-            ),
-            subtitle: Text(
-              'Get the brochure for the event',
-              style: TextStyle(fontSize: 17),
-            ),
-            leading: Icon(
-              FontAwesomeIcons.filePdf,
-              size: 32,
-              color: Theme.of(context).hintColor,
-            ),
-            onTap: () async {
-              showBusyIndicator();
-              try {
-                final response = await get(
-                  Uri.parse('https://www.google.com'),
-                );
-                if (response.statusCode == 200) {
-                  DocumentSnapshot doc = await FirebaseFirestore.instance
-                      .collection('resources')
-                      .doc('brochure')
-                      .get();
-                  String viewUrl = doc['viewUrl'] ?? '';
-                  String downloadUrl = doc['downloadUrl'] ?? '';
-                  Navigator.pop(context);
-                  showMessageDialog(
-                      fileName: 'brochure',
-                      downloadUrl: downloadUrl,
-                      viewUrl: viewUrl);
-                } else {
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(
-                      msg:
-                          'Failed to get resources. Check your internet connection and try again',
-                      backgroundColor: Color(0xFF1C293D),
-                      textColor: Colors.white,
-                      toastLength: Toast.LENGTH_LONG);
-                }
-              } catch (e) {
-                Navigator.pop(context);
-                Fluttertoast.showToast(
-                    msg:
-                        'Failed to get resources. Check your internet connection and try again',
-                    backgroundColor: Color(0xFF1C293D),
-                    textColor: Colors.white,
-                    toastLength: Toast.LENGTH_LONG);
-              }
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 70, right: 20),
-            child: Divider(color: Colors.black, height: 10),
-          ),
-          ListTile(
-            title: Text(
-              'APWEN 2021 Programme of Event',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF1C293D),
-                  fontWeight: FontWeight.w500),
-            ),
-            subtitle: Text(
-              'Get the programme of event',
-              style: TextStyle(fontSize: 17),
-            ),
-            leading: Icon(
-              FontAwesomeIcons.filePdf,
-              size: 32,
-              color: Theme.of(context).hintColor,
-            ),
-            onTap: () async {
-              showBusyIndicator();
-              try {
-                final response = await get(
-                  Uri.parse('https://www.google.com'),
-                );
-                if (response.statusCode == 200) {
-                  DocumentSnapshot doc = await FirebaseFirestore.instance
-                      .collection('resources')
-                      .doc('programme')
-                      .get();
-                  String viewUrl = doc['viewUrl'] ?? '';
-                  String downloadUrl = doc['downloadUrl'] ?? '';
-                  Navigator.pop(context);
-                  showMessageDialog(
-                      fileName: 'programme of event',
-                      downloadUrl: downloadUrl,
-                      viewUrl: viewUrl);
-                } else {
+      body: WillPopScope(
+        onWillPop: () async {
+          selected = HomePage.routeName;
+          Navigator.pushReplacementNamed(context, HomePage.routeName);
+          return false;
+        },
+        child: ListView(
+          children: [
+            SizedBox(height: 25),
+            ListTile(
+              title: Text(
+                'APWEN 2022 Brochure',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF1C293D),
+                    fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(
+                'Get the brochure for the event',
+                style: TextStyle(fontSize: 17),
+              ),
+              leading: Icon(
+                FontAwesomeIcons.filePdf,
+                size: 32,
+                color: Theme.of(context).hintColor,
+              ),
+              onTap: () async {
+                showBusyIndicator();
+                try {
+                  final response = await get(
+                    Uri.parse('https://www.google.com'),
+                  );
+                  if (response.statusCode == 200) {
+                    DocumentSnapshot doc = await FirebaseFirestore.instance
+                        .collection('resources')
+                        .doc('brochure')
+                        .get();
+                    String viewUrl = doc['viewUrl'] ?? '';
+                    String downloadUrl = doc['downloadUrl'] ?? '';
+                    Navigator.pop(context);
+                    showMessageDialog(
+                        fileName: 'brochure',
+                        downloadUrl: downloadUrl,
+                        viewUrl: viewUrl);
+                  } else {
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg:
+                            'Failed to get resources. Check your internet connection and try again',
+                        backgroundColor: Color(0xFF1C293D),
+                        textColor: Colors.white,
+                        toastLength: Toast.LENGTH_LONG);
+                  }
+                } catch (e) {
                   Navigator.pop(context);
                   Fluttertoast.showToast(
                       msg:
@@ -261,57 +218,57 @@ class _ProgrammeState extends State<Programme> {
                       textColor: Colors.white,
                       toastLength: Toast.LENGTH_LONG);
                 }
-              } catch (e) {
-                Navigator.pop(context);
-                Fluttertoast.showToast(
-                    msg:
-                        'Failed to get resources. Check your internet connection and try again',
-                    backgroundColor: Color(0xFF1C293D),
-                    textColor: Colors.white,
-                    toastLength: Toast.LENGTH_LONG);
-              }
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 70, right: 20),
-            child: Divider(color: Colors.black, height: 10),
-          ),
-          ListTile(
-            title: Text(
-              'APWEN 2021 Schedule for Technical Session',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF1C293D),
-                  fontWeight: FontWeight.w500),
+              },
             ),
-            subtitle: Text(
-              'Get the schedule for technical session',
-              style: TextStyle(fontSize: 17),
+            Padding(
+              padding: EdgeInsets.only(left: 70, right: 20),
+              child: Divider(color: Colors.black, height: 10),
             ),
-            leading: Icon(
-              FontAwesomeIcons.filePdf,
-              size: 32,
-              color: Theme.of(context).hintColor,
-            ),
-            onTap: () async {
-              showBusyIndicator();
-              try {
-                final response = await get(
-                  Uri.parse('https://www.google.com'),
-                );
-                if (response.statusCode == 200) {
-                  DocumentSnapshot doc = await FirebaseFirestore.instance
-                      .collection('resources')
-                      .doc('schedule')
-                      .get();
-                  String viewUrl = doc['viewUrl'] ?? '';
-                  String downloadUrl = doc['downloadUrl'] ?? '';
-                  Navigator.pop(context);
-                  showMessageDialog(
-                      fileName: 'schedule for technical session',
-                      downloadUrl: downloadUrl,
-                      viewUrl: viewUrl);
-                } else {
+            ListTile(
+              title: Text(
+                'APWEN 2022 Programme of Event',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF1C293D),
+                    fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(
+                'Get the programme of event',
+                style: TextStyle(fontSize: 17),
+              ),
+              leading: Icon(
+                FontAwesomeIcons.filePdf,
+                size: 32,
+                color: Theme.of(context).hintColor,
+              ),
+              onTap: () async {
+                showBusyIndicator();
+                try {
+                  final response = await get(
+                    Uri.parse('https://www.google.com'),
+                  );
+                  if (response.statusCode == 200) {
+                    DocumentSnapshot doc = await FirebaseFirestore.instance
+                        .collection('resources')
+                        .doc('programme')
+                        .get();
+                    String viewUrl = doc['viewUrl'] ?? '';
+                    String downloadUrl = doc['downloadUrl'] ?? '';
+                    Navigator.pop(context);
+                    showMessageDialog(
+                        fileName: 'programme of event',
+                        downloadUrl: downloadUrl,
+                        viewUrl: viewUrl);
+                  } else {
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg:
+                            'Failed to get resources. Check your internet connection and try again',
+                        backgroundColor: Color(0xFF1C293D),
+                        textColor: Colors.white,
+                        toastLength: Toast.LENGTH_LONG);
+                  }
+                } catch (e) {
                   Navigator.pop(context);
                   Fluttertoast.showToast(
                       msg:
@@ -320,18 +277,69 @@ class _ProgrammeState extends State<Programme> {
                       textColor: Colors.white,
                       toastLength: Toast.LENGTH_LONG);
                 }
-              } catch (e) {
-                Navigator.pop(context);
-                Fluttertoast.showToast(
-                    msg:
-                        'Failed to get resources. Check your internet connection and try again',
-                    backgroundColor: Color(0xFF1C293D),
-                    textColor: Colors.white,
-                    toastLength: Toast.LENGTH_LONG);
-              }
-            },
-          ),
-        ],
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 70, right: 20),
+              child: Divider(color: Colors.black, height: 10),
+            ),
+            ListTile(
+              title: Text(
+                'APWEN 2022 Schedule for Technical Session',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF1C293D),
+                    fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(
+                'Get the schedule for technical session',
+                style: TextStyle(fontSize: 17),
+              ),
+              leading: Icon(
+                FontAwesomeIcons.filePdf,
+                size: 32,
+                color: Theme.of(context).hintColor,
+              ),
+              onTap: () async {
+                showBusyIndicator();
+                try {
+                  final response = await get(
+                    Uri.parse('https://www.google.com'),
+                  );
+                  if (response.statusCode == 200) {
+                    DocumentSnapshot doc = await FirebaseFirestore.instance
+                        .collection('resources')
+                        .doc('schedule')
+                        .get();
+                    String viewUrl = doc['viewUrl'] ?? '';
+                    String downloadUrl = doc['downloadUrl'] ?? '';
+                    Navigator.pop(context);
+                    showMessageDialog(
+                        fileName: 'schedule for technical session',
+                        downloadUrl: downloadUrl,
+                        viewUrl: viewUrl);
+                  } else {
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg:
+                            'Failed to get resources. Check your internet connection and try again',
+                        backgroundColor: Color(0xFF1C293D),
+                        textColor: Colors.white,
+                        toastLength: Toast.LENGTH_LONG);
+                  }
+                } catch (e) {
+                  Navigator.pop(context);
+                  Fluttertoast.showToast(
+                      msg:
+                          'Failed to get resources. Check your internet connection and try again',
+                      backgroundColor: Color(0xFF1C293D),
+                      textColor: Colors.white,
+                      toastLength: Toast.LENGTH_LONG);
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/screens/home_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -61,48 +62,55 @@ class _SponsorsState extends State<Sponsors> {
         ],
       ),
       endDrawer: AppDrawer(),
-      body: LayoutBuilder(builder: (context, viewport1) {
-        return Column(
-          children: [
-            Container(
-              child: CarouselSlider(
-                items: [1, 2, 3, 4, 5]
-                    .map(
-                      (e) => Image.asset(
-                        'assets/sponsors/$e.jpg',
-                        fit: BoxFit.contain,
-                      ),
-                    )
-                    .toList(),
-                options: CarouselOptions(
-                    autoPlay: true,
-                    enableInfiniteScroll: true,
-                    height: viewport1.maxHeight - viewport1.maxHeight * 0.2,
-                    viewportFraction: 1,
-                    enlargeCenterPage: true,
-                    autoPlayAnimationDuration: Duration(seconds: 1),
-                    onPageChanged: (num, _) {
-                      setState(() {
-                        currentSponsor = num.toDouble();
-                      });
-                    }),
+      body: WillPopScope(
+        onWillPop: () async {
+          selected = HomePage.routeName;
+          Navigator.pushReplacementNamed(context, HomePage.routeName);
+          return false;
+        },
+        child: LayoutBuilder(builder: (context, viewport1) {
+          return Column(
+            children: [
+              Container(
+                child: CarouselSlider(
+                  items: [1, 2, 3, 4, 5]
+                      .map(
+                        (e) => Image.asset(
+                          'assets/sponsors/$e.jpg',
+                          fit: BoxFit.contain,
+                        ),
+                      )
+                      .toList(),
+                  options: CarouselOptions(
+                      autoPlay: true,
+                      enableInfiniteScroll: true,
+                      height: viewport1.maxHeight - viewport1.maxHeight * 0.2,
+                      viewportFraction: 1,
+                      enlargeCenterPage: true,
+                      autoPlayAnimationDuration: Duration(seconds: 1),
+                      onPageChanged: (num, _) {
+                        setState(() {
+                          currentSponsor = num.toDouble();
+                        });
+                      }),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            DotsIndicator(
-              dotsCount: 5,
-              position: currentSponsor,
-              decorator: DotsDecorator(
-                activeColor: Color(0xFFF1592D),
-                color: Color(0xFF1C293D),
-                size: Size.square(10),
-                activeSize: Size.square(14),
-                spacing: EdgeInsets.all(8),
+              SizedBox(height: 10),
+              DotsIndicator(
+                dotsCount: 5,
+                position: currentSponsor,
+                decorator: DotsDecorator(
+                  activeColor: Color(0xFFF1592D),
+                  color: Color(0xFF1C293D),
+                  size: Size.square(10),
+                  activeSize: Size.square(14),
+                  spacing: EdgeInsets.all(8),
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

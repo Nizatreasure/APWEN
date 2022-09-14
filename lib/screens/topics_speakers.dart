@@ -1,5 +1,6 @@
 import 'package:apwen/drawer.dart';
 import 'package:apwen/screens/about_speakers.dart';
+import 'package:apwen/screens/home_page.dart';
 import 'package:apwen/screens/topic_brief.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,25 +58,33 @@ class _TopicsSpeakersState extends State<TopicsSpeakers> {
         ],
       ),
       endDrawer: AppDrawer(),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('Speakers')
-            .orderBy('name')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none ||
-              snapshot.connectionState == ConnectionState.waiting)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
-            return Center(
-              child: Text('No data'),
-            );
-          }
-
-          return _buildSpeakers(snapshot.requireData.docs);
+      body: WillPopScope(
+        onWillPop: () async {
+          selected = HomePage.routeName;
+          Navigator.pushReplacementNamed(context, HomePage.routeName);
+          return false;
         },
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('Speakers')
+              .orderBy('name')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none ||
+                snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text('No data'),
+              );
+            }
+
+            return _buildSpeakers(snapshot.requireData.docs);
+          },
+        ),
       ),
     );
   }

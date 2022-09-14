@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "529907788317-io649hbg4ehn5si0ftk0mkfk3fspa8e9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apwen.apwen",
+            "certificate_hash": "2595283e02705d68a5256077b77c9d97145b88b0"
+          }
+        },
+        {
           "client_id": "529907788317-26h8naip0d36p3ljukhqc9d246ht83t4.apps.googleusercontent.com",
           "client_type": 3
         }
