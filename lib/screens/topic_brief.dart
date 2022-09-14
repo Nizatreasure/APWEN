@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:apwen/screens/about_speakers.dart';
 import 'package:apwen/screens/comments.dart';
 import 'package:cached_network_image/cached_network_image.dart';

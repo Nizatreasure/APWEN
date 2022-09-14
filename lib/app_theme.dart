@@ -4,7 +4,6 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   brightness: Brightness.light,
   primaryColor: Colors.white,
-  buttonColor: Color(0xFF1C293D),
   splashColor: Colors.transparent,
   hoverColor: Colors.transparent,
   highlightColor: Colors.transparent,
@@ -33,6 +32,8 @@ ThemeData lightTheme = ThemeData(
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
               fontSize: 20)))),
-  accentColor: Colors.transparent,
   hintColor: Color(0xFFF1592D),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: Colors.transparent,
+  ),
 );

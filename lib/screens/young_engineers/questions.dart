@@ -14,8 +14,8 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   Future<void> openUrl(String url, BuildContext context) async {
-    if (await canLaunch(url))
-      launch(url);
+    if (await canLaunchUrl(Uri.parse(url)))
+      launchUrl(Uri.parse(url));
     else
       showError(context);
   }
