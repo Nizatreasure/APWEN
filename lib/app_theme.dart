@@ -31,7 +31,7 @@ ThemeData lightTheme = ThemeData(
               color: Color(0xFF1C293D),
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
-              fontSize: 20)))),
+              fontSize: 20,),),),),
   hintColor: Color(0xFFF1592D),
   colorScheme: ColorScheme.fromSwatch().copyWith(
     secondary: Colors.transparent,
