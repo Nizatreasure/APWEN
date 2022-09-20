@@ -1,8 +1,10 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:apwen/screens/home_page.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:dots_indicator/dots_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Sponsors extends StatefulWidget {
   static const routeName = '/sponsors';
@@ -13,104 +15,70 @@ class Sponsors extends StatefulWidget {
 }
 
 class _SponsorsState extends State<Sponsors> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  double currentSponsor = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 22),
-              children: [
-                TextSpan(text: 'A'),
-                TextSpan(text: 'P'),
-                TextSpan(
-                  text: 'W',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+    return PageDecoration(
+      showMenu: true,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('sponsors')
+              .orderBy('id')
+              .snapshots(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.none ||
+                snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(
+                    Color.fromRGBO(165, 54, 146, 1),
+                  ),
+                  strokeWidth: 5,
                 ),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'N'),
-                TextSpan(text: '  '),
-                TextSpan(text: 'S'),
-                TextSpan(text: 'P'),
-                TextSpan(text: 'O'),
-                TextSpan(text: 'N'),
-                TextSpan(text: 'S'),
-                TextSpan(text: 'O'),
-                TextSpan(text: 'R'),
-                TextSpan(text: 'S'),
-              ],
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 1,
-        toolbarHeight: 65,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-            icon: Icon(Icons.notes_rounded),
-            splashColor: Colors.transparent,
-          ),
-        ],
-      ),
-      endDrawer: AppDrawer(),
-      body: WillPopScope(
-        onWillPop: () async {
-          selected = HomePage.routeName;
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
-          return false;
-        },
-        child: LayoutBuilder(builder: (context, viewport1) {
-          return Column(
-            children: [
-              Container(
-                child: CarouselSlider(
-                  items: [1, 2, 3, 4, 5]
-                      .map(
-                        (e) => Image.asset(
-                          'assets/sponsors/$e.jpg',
-                          fit: BoxFit.contain,
-                        ),
-                      )
-                      .toList(),
-                  options: CarouselOptions(
-                      autoPlay: true,
-                      enableInfiniteScroll: true,
-                      height: viewport1.maxHeight - viewport1.maxHeight * 0.2,
-                      viewportFraction: 1,
-                      enlargeCenterPage: true,
-                      autoPlayAnimationDuration: Duration(seconds: 1),
-                      onPageChanged: (num, _) {
-                        setState(() {
-                          currentSponsor = num.toDouble();
-                        });
-                      }),
+              );
+            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text(
+                  'No Sponsors Available.',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(height: 10),
-              DotsIndicator(
-                dotsCount: 5,
-                position: currentSponsor,
-                decorator: DotsDecorator(
-                  activeColor: Color(0xFFF1592D),
-                  color: Color(0xFF1C293D),
-                  size: Size.square(10),
-                  activeSize: Size.square(14),
-                  spacing: EdgeInsets.all(8),
-                ),
-              ),
-            ],
-          );
-        }),
-      ),
+              );
+            }
+            return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                padding: EdgeInsets.all(20),
+                itemBuilder: (context, index) {
+                  QueryDocumentSnapshot currentData =
+                      snapshot.data!.docs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      launchWebsite(currentData);
+                    },
+                    child: Container(
+                      constraints: BoxConstraints(minHeight: 200),
+                      child: CachedNetworkImage(
+                        imageUrl: currentData['image'],
+                      ),
+                    ),
+                  );
+                });
+          }),
+      pageHeader: 'APWEN Sponsors',
+    );
+  }
+}
+
+Future<void> launchWebsite(QueryDocumentSnapshot data) async {
+  String url = data['url'] ?? '';
+  if (url.isNotEmpty && await canLaunchUrl(Uri.parse(url))) {
+    launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
     );
   }
 }

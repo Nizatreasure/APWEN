@@ -1,7 +1,8 @@
 import 'package:apwen/screens/about_apwen.dart';
 import 'package:apwen/screens/home_page.dart';
+import 'package:apwen/screens/panelists.dart';
 import 'package:apwen/screens/programme.dart';
-import 'package:apwen/screens/social_events.dart';
+import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
@@ -21,176 +22,118 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Container(
-        color: Colors.black26,
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: RawScrollbar(
-                  thumbColor: Color(0xFF1C293D),
-                  thickness: 3,
-                  child: ListView(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          openUrl('https://www.apwen.org', context);
-                        },
-                        child: Container(
-                          height: 140,
-                          width: double.infinity,
-                          color: Colors.black12,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 60,
-                                height: 60,
-                                child: Image.asset('assets/logo.png'),
-                              ),
-                              SizedBox(width: 15),
-                              RichText(
-                                text: TextSpan(
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(fontSize: 25),
-                                  children: [
-                                    TextSpan(text: 'A'),
-                                    TextSpan(
-                                      text: 'P',
-                                    ),
-                                    TextSpan(
-                                        text: 'W',
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).hintColor)),
-                                    TextSpan(
-                                      text: 'E',
-                                    ),
-                                    TextSpan(text: 'N\n'),
-                                    TextSpan(text: 'Conference')
-                                  ],
-                                ),
-                              ),
-                            ],
+    return Container(
+      color: Color.fromRGBO(234, 225, 232, 1),
+      width: 0.7 * MediaQuery.of(context).size.width,
+      child: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: RawScrollbar(
+                thumbColor: Color.fromRGBO(165, 54, 146, 0.43),
+                thickness: 3,
+                child: ListView(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        openUrl('https://www.apwen.org', context);
+                      },
+                      child: Container(
+                        height: 140,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color.fromRGBO(165, 54, 146, 1),
+                              width: 0.5,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            appDrawerButton(
-                                name: 'Home', path: HomePage.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'Speakers',
-                                path: TopicsSpeakers.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'Social Events',
-                                path: SocialEvents.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'Programme', path: Programme.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'Young Engineers',
-                                path: YoungEngineersHome.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'Sponsors', path: Sponsors.routeName),
-                            SizedBox(height: 10),
-                            appDrawerButton(
-                                name: 'About APWEN',
-                                path: AboutAPWEN.routeName),
-                            SizedBox(height: 20),
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: Image.asset('assets/logo.png'),
+                            ),
+                            SizedBox(width: 15),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lobster',
+                                  fontSize: 16.5,
+                                ),
+                                children: [
+                                  TextSpan(text: 'A'),
+                                  TextSpan(
+                                    text: 'P',
+                                  ),
+                                  TextSpan(
+                                    text: 'W',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(165, 54, 146, 1),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'E',
+                                  ),
+                                  TextSpan(text: 'N '),
+                                  TextSpan(text: 'Conference')
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.black12,
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        openUrl(
-                            'https://web.facebook.com/apwen.apwen.3', context);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.facebookF,
-                        size: 30,
-                        color: Color(0xff4267b2),
-                      ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        openUrl('https://www.twitter.com/apwen_ng', context);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.twitter,
-                        size: 30,
-                        color: Color(0xff1da1f2),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        openUrl(
-                            'https://www.linkedin.com/in/apwen-national-hq-8440b369',
-                            context);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.linkedinIn,
-                        size: 30,
-                        color: Color(0xff0077b5),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        openUrl(
-                            'https://www.instagram.com/apwennational', context);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.instagram,
-                        size: 30,
-                        color: Color(0xffcd486b),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        openUrl(
-                            'https://youtube.com/channel/UC6tgFLmOTb1IGzYiFDgB9MQ',
-                            context);
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.youtube,
-                        size: 30,
-                        color: Color(0xffff0000),
+                    SizedBox(height: 20),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          appDrawerButton(
+                              name: 'Home', path: HomePage.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'Speakers', path: TopicsSpeakers.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'Panelists', path: Panelists.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'Programme', path: Programme.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'Young Engineers',
+                              path: YoungEngineersHome.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'Sponsors', path: Sponsors.routeName),
+                          SizedBox(height: 10),
+                          appDrawerButton(
+                              name: 'About APWEN', path: AboutAPWEN.routeName),
+                          SizedBox(height: 20),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
   appDrawerButton({required String name, required String path}) {
-    return TextButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         if (selected == path) {
           Navigator.pop(context);
         } else {
@@ -202,29 +145,44 @@ class _AppDrawerState extends State<AppDrawer> {
           );
         }
       },
-      style: Theme.of(context).textButtonTheme.style,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         width: double.infinity,
         decoration: BoxDecoration(
-            border: selected == path
-                ? Border.all(
-                    color: Color(0xFF1C293D),
+          color: selected == path ? Color.fromRGBO(165, 54, 146, 0.43) : null,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: selected == path
+              ? [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    color: Color.fromRGBO(62, 6, 52, 0.5),
+                    blurRadius: 4,
+                    spreadRadius: 0,
                   )
-                : null,
-            borderRadius: BorderRadius.circular(8)),
+                ]
+              : null,
+        ),
         child: Text(
           name,
-          style: Theme.of(context).textTheme.button?.copyWith(fontSize: 22),
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 18,
+            fontWeight: selected == path ? FontWeight.w600 : FontWeight.w500,
+            color: selected == path ? Colors.white : Colors.black,
+          ),
         ),
       ),
     );
   }
 }
 
-Future<void> openUrl(String url, BuildContext context) async {
+Future<void> openUrl(String url, BuildContext context,
+    {LaunchMode launchMode = LaunchMode.externalApplication}) async {
   if (await canLaunchUrl(Uri.parse(url)))
-    launchUrl(Uri.parse(url));
+    launchUrl(
+      Uri.parse(url),
+      mode: launchMode,
+    );
   else
     showError(context);
 }

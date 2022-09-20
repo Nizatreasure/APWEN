@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:android_path_provider/android_path_provider.dart';
 import 'package:apwen/drawer.dart';
-import 'package:apwen/screens/home_page.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -12,8 +12,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart';
 
 class Programme extends StatefulWidget {
   static const routeName = '/programme';
@@ -24,7 +22,6 @@ class Programme extends StatefulWidget {
 }
 
 class _ProgrammeState extends State<Programme> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   ReceivePort _port = ReceivePort();
 
   registerDownloadPort() async {
@@ -32,19 +29,14 @@ class _ProgrammeState extends State<Programme> {
         _port.sendPort, 'downloader_send_port');
     _port.listen(
       (dynamic data) {
-        // String id = data[0];
         DownloadTaskStatus status = data[1];
         int progress = data[2];
         progress = progress < 0 ? 0 : progress;
 
         if (status == DownloadTaskStatus.complete ||
-            status == DownloadTaskStatus(3))
-          Fluttertoast.showToast(
-              msg: 'Download complete',
-              backgroundColor: Color(0xFF1C293D),
-              textColor: Colors.white);
-
-        // setState(() {});
+            status == DownloadTaskStatus(3)) {
+          if (mounted) showOpenDialog(data[0]);
+        }
       },
     );
   }
@@ -56,7 +48,7 @@ class _ProgrammeState extends State<Programme> {
     send!.send([id, status, progress]);
   }
 
-  downloadFiles(String fileName, String url) async {
+  downloadFiles(String fileName, String url, {String? holder}) async {
     String localPath;
     final status = await Permission.storage.request();
     if (status.isGranted) {
@@ -65,7 +57,6 @@ class _ProgrammeState extends State<Programme> {
           : await getApplicationDocumentsDirectory();
 
       localPath = downloadPath.path;
-      print(localPath);
 
       bool exists =
           await File(localPath + Platform.pathSeparator + fileName + '.pdf')
@@ -80,32 +71,32 @@ class _ProgrammeState extends State<Programme> {
             showNotification: true,
             openFileFromNotification: true);
       } else {
-        int? val = int.tryParse(
-          fileName.substring(fileName.length - 1),
-        );
+        print(holder);
+        int? val = int.tryParse(fileName
+            .substring(holder == null ? fileName.length - 1 : holder.length));
+        holder = holder == null ? fileName : holder;
+
+        print('val is $val');
         val = val == null ? 1 : val + 1;
         val == 1
-            ? downloadFiles(fileName + '$val', url)
-            : downloadFiles(
-                fileName.substring(0, fileName.length - 1) + '$val', url);
+            ? downloadFiles(fileName + '$val', url, holder: holder)
+            : downloadFiles(fileName.substring(0, holder.length) + '$val', url,
+                holder: holder);
       }
     } else
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please grant storage permission to download brochure',
-            style: TextStyle(color: Colors.white),
+            'Please grant storage permission to download file',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Montserrat',
+              fontSize: 16.5,
+            ),
           ),
-          backgroundColor: Color(0xFFF1592D),
+          backgroundColor: Color.fromRGBO(165, 54, 146, 1),
         ),
       );
-  }
-
-  Future<void> openUrl(String url, BuildContext context) async {
-    if (await canLaunchUrl(Uri.parse(url)))
-      launchUrl(Uri.parse(url));
-    else
-      showError(context);
   }
 
   @override
@@ -115,261 +106,99 @@ class _ProgrammeState extends State<Programme> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 21),
-              children: [
-                TextSpan(text: 'P'),
-                TextSpan(text: 'R'),
-                TextSpan(text: 'O'),
-                TextSpan(text: 'G'),
-                TextSpan(
-                  text: 'R',
-                  style: TextStyle(color: Theme.of(context).hintColor),
-                ),
-                TextSpan(text: 'A'),
-                TextSpan(text: 'M'),
-                TextSpan(text: 'M'),
-                TextSpan(text: 'E'),
-              ],
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 1,
-        toolbarHeight: 65,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-            icon: Icon(Icons.notes_rounded),
-            splashColor: Colors.transparent,
-          )
-        ],
-      ),
-      endDrawer: AppDrawer(),
-      body: WillPopScope(
-        onWillPop: () async {
-          selected = HomePage.routeName;
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
-          return false;
-        },
-        child: ListView(
-          children: [
-            SizedBox(height: 25),
-            ListTile(
-              title: Text(
-                'APWEN 2022 Brochure',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'Get the brochure for the event',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.filePdf,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              onTap: () async {
-                showBusyIndicator();
-                try {
-                  final response = await get(
-                    Uri.parse('https://www.google.com'),
-                  );
-                  if (response.statusCode == 200) {
-                    DocumentSnapshot doc = await FirebaseFirestore.instance
-                        .collection('resources')
-                        .doc('brochure')
-                        .get();
-                    String viewUrl = doc['viewUrl'] ?? '';
-                    String downloadUrl = doc['downloadUrl'] ?? '';
-                    Navigator.pop(context);
-                    showMessageDialog(
-                        fileName: 'brochure',
-                        downloadUrl: downloadUrl,
-                        viewUrl: viewUrl);
-                  } else {
-                    Navigator.pop(context);
-                    Fluttertoast.showToast(
-                        msg:
-                            'Failed to get resources. Check your internet connection and try again',
-                        backgroundColor: Color(0xFF1C293D),
-                        textColor: Colors.white,
-                        toastLength: Toast.LENGTH_LONG);
-                  }
-                } catch (e) {
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(
-                      msg:
-                          'Failed to get resources. Check your internet connection and try again',
-                      backgroundColor: Color(0xFF1C293D),
-                      textColor: Colors.white,
-                      toastLength: Toast.LENGTH_LONG);
-                }
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 70, right: 20),
-              child: Divider(color: Colors.black, height: 10),
-            ),
-            ListTile(
-              title: Text(
-                'APWEN 2022 Programme of Event',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'Get the programme of event',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.filePdf,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              onTap: () async {
-                showBusyIndicator();
-                try {
-                  final response = await get(
-                    Uri.parse('https://www.google.com'),
-                  );
-                  if (response.statusCode == 200) {
-                    DocumentSnapshot doc = await FirebaseFirestore.instance
-                        .collection('resources')
-                        .doc('programme')
-                        .get();
-                    String viewUrl = doc['viewUrl'] ?? '';
-                    String downloadUrl = doc['downloadUrl'] ?? '';
-                    Navigator.pop(context);
-                    showMessageDialog(
-                        fileName: 'programme of event',
-                        downloadUrl: downloadUrl,
-                        viewUrl: viewUrl);
-                  } else {
-                    Navigator.pop(context);
-                    Fluttertoast.showToast(
-                        msg:
-                            'Failed to get resources. Check your internet connection and try again',
-                        backgroundColor: Color(0xFF1C293D),
-                        textColor: Colors.white,
-                        toastLength: Toast.LENGTH_LONG);
-                  }
-                } catch (e) {
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(
-                      msg:
-                          'Failed to get resources. Check your internet connection and try again',
-                      backgroundColor: Color(0xFF1C293D),
-                      textColor: Colors.white,
-                      toastLength: Toast.LENGTH_LONG);
-                }
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 70, right: 20),
-              child: Divider(color: Colors.black, height: 10),
-            ),
-            ListTile(
-              title: Text(
-                'APWEN 2022 Schedule for Technical Session',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'Get the schedule for technical session',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.filePdf,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              onTap: () async {
-                showBusyIndicator();
-                try {
-                  final response = await get(
-                    Uri.parse('https://www.google.com'),
-                  );
-                  if (response.statusCode == 200) {
-                    DocumentSnapshot doc = await FirebaseFirestore.instance
-                        .collection('resources')
-                        .doc('schedule')
-                        .get();
-                    String viewUrl = doc['viewUrl'] ?? '';
-                    String downloadUrl = doc['downloadUrl'] ?? '';
-                    Navigator.pop(context);
-                    showMessageDialog(
-                        fileName: 'schedule for technical session',
-                        downloadUrl: downloadUrl,
-                        viewUrl: viewUrl);
-                  } else {
-                    Navigator.pop(context);
-                    Fluttertoast.showToast(
-                        msg:
-                            'Failed to get resources. Check your internet connection and try again',
-                        backgroundColor: Color(0xFF1C293D),
-                        textColor: Colors.white,
-                        toastLength: Toast.LENGTH_LONG);
-                  }
-                } catch (e) {
-                  Navigator.pop(context);
-                  Fluttertoast.showToast(
-                      msg:
-                          'Failed to get resources. Check your internet connection and try again',
-                      backgroundColor: Color(0xFF1C293D),
-                      textColor: Colors.white,
-                      toastLength: Toast.LENGTH_LONG);
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
   }
 
-  showBusyIndicator() {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text('Getting resources. Please wait...'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(),
+  @override
+  Widget build(BuildContext context) {
+    return PageDecoration(
+      showMenu: true,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('resources')
+              .orderBy('title')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.none ||
+                snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(
+                    Color.fromRGBO(165, 54, 146, 1),
                   ),
-                )
-              ],
-            ),
-          );
-        });
+                  strokeWidth: 5,
+                ),
+              );
+            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text(
+                  'No Programme',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              );
+            }
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                QueryDocumentSnapshot currentData = snapshot.data!.docs[index];
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        currentData['title'],
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: currentData['subtitle'] != null
+                          ? Text(
+                              currentData['subtitle'],
+                              style: TextStyle(
+                                fontSize: 13.5,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          : null,
+                      leading: Icon(
+                        FontAwesomeIcons.filePdf,
+                        size: 32,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                      ),
+                      onTap: () async {
+                        String viewUrl = currentData['viewUrl'] ?? '';
+                        String downloadUrl = currentData['downloadUrl'] ?? '';
+                        showMessageDialog(
+                          fileName: currentData['title'],
+                          downloadUrl: downloadUrl,
+                          viewUrl: viewUrl,
+                        );
+                      },
+                    ),
+                    if (index != snapshot.data!.docs.length - 1)
+                      Padding(
+                        padding: EdgeInsets.only(left: 70, right: 20),
+                        child: Divider(
+                            color: Color.fromRGBO(165, 54, 146, 1), height: 10),
+                      ),
+                  ],
+                );
+              },
+              itemCount: snapshot.data!.docs.length,
+              padding: EdgeInsets.symmetric(vertical: 20),
+            );
+          }),
+      pageHeader: 'Programme',
+    );
   }
 
   showMessageDialog(
@@ -380,14 +209,122 @@ class _ProgrammeState extends State<Programme> {
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
-                child: Text('View or download the $fileName'),
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                child: Text(
+                  fileName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      openUrl(viewUrl, context);
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                              color: Color.fromRGBO(165, 54, 146, 1),
+                            )),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'View',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Color.fromRGBO(165, 54, 146, 1),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      downloadFiles(fileName.split(' ').join('_'), downloadUrl);
+                      Fluttertoast.showToast(
+                        msg: 'Download started',
+                        backgroundColor: Color.fromRGBO(165, 54, 146, 1),
+                        textColor: Colors.white,
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromRGBO(165, 54, 146, 1),
+                      ),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12))),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Download',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10)
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  showOpenDialog(String id) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Color.fromRGBO(217, 217, 217, 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                child: Text(
+                  'Download Complete',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -396,80 +333,53 @@ class _ProgrammeState extends State<Programme> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xFF1C293D),
-                        ),
-                        borderRadius: BorderRadius.circular(8),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                              color: Color.fromRGBO(165, 54, 146, 1),
+                            )),
                       ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
                       child: Text(
-                        'Cancel',
+                        'Close',
                         style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF1C293D),
+                          fontSize: 17,
+                          color: Color.fromRGBO(165, 54, 146, 1),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      if (viewUrl.isNotEmpty)
-                        openUrl(viewUrl, context);
-                      else
-                        Fluttertoast.showToast(
-                            msg: 'Link unavailable. Try again later',
-                            backgroundColor: Color(0xFF1C293D),
-                            textColor: Colors.white,
-                            toastLength: Toast.LENGTH_LONG);
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      FlutterDownloader.open(taskId: id);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                        Colors.blue[700],
+                        Color.fromRGBO(165, 54, 146, 1),
                       ),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12))),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        'Download',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        'Open',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                  // TextButton(
-                  //   onPressed: () {
-                  //     if (downloadUrl.isNotEmpty) {
-                  //       Navigator.pop(context);
-                  //       Fluttertoast.showToast(
-                  //           msg: 'Downloading',
-                  //           backgroundColor: Color(0xFF1C293D),
-                  //           textColor: Colors.white,
-                  //           toastLength: Toast.LENGTH_LONG);
-                  //       downloadFiles(
-                  //           'APWEN_Conference_' + fileName.split(' ').join('_'),
-                  //           downloadUrl);
-                  //     } else
-                  //       Fluttertoast.showToast(
-                  //           msg: 'Link unavailable. Try again later',
-                  //           backgroundColor: Color(0xFF1C293D),
-                  //           textColor: Colors.white,
-                  //           toastLength: Toast.LENGTH_LONG);
-                  //   },
-                  //   style: ButtonStyle(
-                  //     backgroundColor: MaterialStateProperty.all(
-                  //       Colors.blue,
-                  //     ),
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                  //     child: Text(
-                  //       'Download',
-                  //       style: TextStyle(fontSize: 18, color: Colors.white),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
               SizedBox(height: 10)
