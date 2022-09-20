@@ -1,10 +1,11 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:apwen/screens/about_speakers.dart';
 import 'package:apwen/screens/home_page.dart';
-import 'package:apwen/screens/topic_brief.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TopicsSpeakers extends StatefulWidget {
   static const routeName = '/topicsandspeakers';
@@ -15,166 +16,143 @@ class TopicsSpeakers extends StatefulWidget {
 }
 
 class _TopicsSpeakersState extends State<TopicsSpeakers> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 22),
-              children: [
-                TextSpan(text: 'S'),
-                TextSpan(text: 'P'),
-                TextSpan(text: 'E'),
-                TextSpan(
-                    text: 'A',
-                    style: TextStyle(color: Theme.of(context).hintColor)),
-                TextSpan(
-                  text: 'K',
+    return PageDecoration(
+      pageHeader: 'Speakers',
+      showMenu: true,
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('Speakers')
+            .orderBy('name')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.none ||
+              snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(
+                  Color.fromRGBO(165, 54, 146, 1),
                 ),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'R'),
-                TextSpan(text: 'S'),
-              ],
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 1,
-        toolbarHeight: 65,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-            icon: Icon(Icons.notes_rounded),
-            splashColor: Colors.transparent,
-          )
-        ],
-      ),
-      endDrawer: AppDrawer(),
-      body: WillPopScope(
-        onWillPop: () async {
-          selected = HomePage.routeName;
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
-          return false;
-        },
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('Speakers')
-              .orderBy('name')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none ||
-                snapshot.connectionState == ConnectionState.waiting)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text('No data'),
-              );
-            }
+                strokeWidth: 5,
+              ),
+            );
+          if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                'No Data',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+            );
+          }
 
-            return _buildSpeakers(snapshot.requireData.docs);
-          },
-        ),
+          return buildSpeakers(snapshot.data!.docs, context);
+        },
       ),
     );
   }
+}
 
-  _buildSpeakers(List<QueryDocumentSnapshot> data) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        var doc = data[index].data()! as Map<String, dynamic>;
-        print(doc);
-        return Column(
-          children: [
-            if (index == 0) SizedBox(height: 30),
-            ListTile(
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    AboutSpeaker.routeName,
-                    arguments: {
-                      'index': index,
-                      'name': doc['name'] ?? '',
-                      'aboutSpeakers': doc['about_speaker'] ?? '',
-                      'image': doc['image'] ?? ''
+buildSpeakers(List<QueryDocumentSnapshot> data, BuildContext context) {
+  return ListView.builder(
+    itemBuilder: (context, index) {
+      var doc = data[index].data()! as Map<String, dynamic>;
+
+      return Column(
+        children: [
+          if (index == 0) SizedBox(height: 20),
+          ListTile(
+            leading: Hero(
+              tag: 'image$index',
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromRGBO(227, 207, 224, 1)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(60),
+                  child: CachedNetworkImage(
+                    imageUrl: doc['image'] ?? '',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                    errorWidget: (context, _, __) {
+                      return Center(
+                        child: Icon(
+                          Icons.error,
+                          size: 38,
+                        ),
+                      );
                     },
-                  );
-                },
-                child: Hero(
-                  tag: 'image$index',
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red[200]),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(60),
-                      child: CachedNetworkImage(
-                        imageUrl: doc['image'] ?? '',
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        errorWidget: (context, _, __) {
-                          return Center(
-                            child: Icon(
-                              Icons.error,
-                              size: 38,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
                   ),
                 ),
               ),
-              onTap: () {
-                Navigator.pushNamed(context, TopicBrief.routeName, arguments: {
-                  'index': index,
-                  'aboutSpeaker': doc['about_speaker'] ?? '',
-                  'aboutTopic': doc['about_topic'] ?? '',
-                  'name': doc['name'] ?? '',
-                  'id': doc['id'] ?? index,
-                  'topic': doc['topic'] ?? '',
-                  'image': doc['image'] ?? ''
-                });
-              },
-              title: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  doc['name'] ?? '',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4, left: 10),
-                  child: Text(
-                    doc['title'] ?? '',
-                    style: TextStyle(fontSize: 15),
-                  )),
-              trailing: Icon(Icons.arrow_forward_ios),
             ),
-            if (index != 21)
-              Padding(
-                padding: EdgeInsets.fromLTRB(70, 0, 10, 0),
-                child: Divider(
-                  color: Color(0xFF1C293D),
+            onTap: () {
+              if (((doc['about'] ?? '') as String).isNotEmpty)
+                Navigator.pushNamed(
+                  context,
+                  AboutSpeaker.routeName,
+                  arguments: {
+                    'index': index,
+                    'name': doc['name'] ?? '',
+                    'about': doc['about'],
+                    'image': doc['image'] ?? ''
+                  },
+                );
+              else {
+                Fluttertoast.showToast(
+                  msg: 'Profile not Available',
+                  textColor: Colors.white,
+                  backgroundColor: Color.fromRGBO(165, 54, 146, 1),
+                );
+              }
+            },
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 5),
+              child: Text(
+                doc['name'] ?? '',
+                style: TextStyle(
+                  fontSize: 16.5,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                  fontFamily: 'Montserrat',
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
-          ],
-        );
-      },
-      itemCount: data.length,
-    );
-  }
+            ),
+            subtitle: Padding(
+                padding: const EdgeInsets.only(top: 4, left: 10, bottom: 5),
+                child: Text(
+                  doc['title'] ?? '',
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    fontFamily: 'Montserrat',
+                    color: Color.fromRGBO(144, 144, 144, 1),
+                    fontWeight: FontWeight.w400,
+                  ),
+                )),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Color.fromRGBO(165, 54, 146, 1),
+              size: 20,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(93, 0, 10, 0),
+            child: Divider(
+              color: Color.fromRGBO(165, 54, 146, 1),
+              height: 6,
+            ),
+          ),
+        ],
+      );
+    },
+    itemCount: data.length,
+  );
 }

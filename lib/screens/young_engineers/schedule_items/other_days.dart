@@ -14,11 +14,11 @@ class _OtherDaysState extends State<OtherDays> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.only(left: 30, right: 20),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('young_engineers')
-            .doc('young_engineers')
+            .doc(widget.day)
             .collection(widget.day)
             .orderBy('time')
             .snapshots(),
@@ -41,15 +41,17 @@ class _OtherDaysState extends State<OtherDays> {
             children: [
               SizedBox(height: 20),
               if (snapshot.data!.docs.first['theme'].toString().isNotEmpty)
-                Text(
-                  snapshot.data!.docs.first['theme'].toString().toUpperCase(),
-                  style: TextStyle(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Text(
+                    snapshot.data!.docs.first['theme'].toString().toUpperCase(),
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
-                      fontSize: 20),
+                      fontSize: 16.5,
+                    ),
+                  ),
                 ),
-              if (snapshot.data!.docs.first['theme'].toString().isNotEmpty)
-                SizedBox(height: 25),
               _buildCards(snapshot.data!.docs)
             ],
           );
@@ -68,7 +70,7 @@ class _OtherDaysState extends State<OtherDays> {
           return TimelineTile(
             node: TimelineNode.simple(
               indicatorPosition: 0,
-              color: Theme.of(context).hintColor.withOpacity(0.5),
+              color: Color.fromRGBO(165, 54, 146, 1),
               indicatorSize: 17,
             ),
             contents: Padding(
@@ -81,17 +83,19 @@ class _OtherDaysState extends State<OtherDays> {
                     child: Text(
                       doc['time'],
                       style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 23),
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.5,
+                        fontFamily: 'Montserrat',
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Card(
-                    color: Color(0xfffffaf8),
-                    elevation: 1,
+                    color: Color.fromRGBO(227, 207, 224, 1),
+                    elevation: 8,
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.fromLTRB(22, 15, 15, 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -100,23 +104,32 @@ class _OtherDaysState extends State<OtherDays> {
                             Column(
                               children:
                                   (doc['activity']['title'] as List).map((e) {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        e[0].toString().toUpperCase() +
-                                            e.toString().substring(1),
-                                        style: TextStyle(
-                                            fontSize: 17,
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          e[0].toString().toUpperCase() +
+                                              e.toString().substring(1),
+                                          style: TextStyle(
+                                            fontSize: 15,
                                             fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w700),
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 );
                               }).toList(),
                             ),
-                          SizedBox(height: 12),
+                          if (((doc['activity']['others'] ?? []) as List)
+                                  .isNotEmpty &&
+                              ((doc['activity']['title'] ?? []) as List)
+                                  .isNotEmpty)
+                            SizedBox(height: 12),
                           if (((doc['activity']['others'] ?? []) as List)
                               .isNotEmpty)
                             Column(
@@ -134,17 +147,21 @@ class _OtherDaysState extends State<OtherDays> {
                                         margin:
                                             EdgeInsets.only(right: 8, top: 4),
                                         decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.black54),
+                                          shape: BoxShape.circle,
+                                          color:
+                                              Color.fromRGBO(165, 54, 146, 1),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
                                           e[0].toString().toUpperCase() +
                                               e.toString().substring(1),
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w500),
+                                            fontSize: 15,
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -155,47 +172,54 @@ class _OtherDaysState extends State<OtherDays> {
                         ],
                       ),
                     ),
-                    shadowColor: Theme.of(context).textTheme.bodyText1?.color,
+                    shadowColor: Color.fromRGBO(198, 162, 192, 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
+                      borderRadius: BorderRadius.circular(22),
+                      side: BorderSide(
+                        color: Colors.white,
+                        width: 1,
                       ),
                     ),
                   ),
-                  SizedBox(height: 6),
                   if (((doc['venue'] ?? '') as String).isNotEmpty)
                     Row(
                       children: [
-                        Text(
-                          'Venue:',
-                          style: TextStyle(
-                              fontSize: 17,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 4.0, top: 6, bottom: 8),
+                          child: Text(
+                            'Venue:',
+                            style: TextStyle(
+                              fontSize: 15,
                               fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             doc['venue'],
                             style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700),
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  if (((doc['venue'] ?? '') as String).isNotEmpty)
-                    SizedBox(height: 8),
                   if (((doc['resource_persons'] ?? []) as List).isNotEmpty)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(width: 5),
                         Text(
                           'Resource Person(s):',
                           style: TextStyle(
                             fontSize: 15,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(width: 8),
@@ -209,8 +233,10 @@ class _OtherDaysState extends State<OtherDays> {
                                     child: Text(
                                       e,
                                       style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Montserrat',
+                                      ),
                                     ),
                                   ),
                                 )
@@ -228,6 +254,8 @@ class _OtherDaysState extends State<OtherDays> {
                           'Moderator(s):',
                           style: TextStyle(
                             fontSize: 15,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(width: 8),
@@ -241,8 +269,10 @@ class _OtherDaysState extends State<OtherDays> {
                                     child: Text(
                                       e,
                                       style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                                        fontSize: 15,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 )

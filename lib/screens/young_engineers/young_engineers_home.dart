@@ -1,180 +1,223 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:apwen/screens/home_page.dart';
-import 'package:apwen/screens/young_engineers/panelists.dart';
+import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:apwen/screens/young_engineers/speakers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class YoungEngineersHome extends StatelessWidget {
   static const String routeName = '/youngengineershome';
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   YoungEngineersHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 21),
+    return PageDecoration(
+      showMenu: true,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('questions')
+              .orderBy('id')
+              .snapshots(),
+          builder: (context, snapshot) {
+            return ListView(
               children: [
-                TextSpan(text: 'Y'),
-                TextSpan(text: 'O'),
-                TextSpan(
-                  text: 'U',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+                SizedBox(height: 20),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        FontAwesomeIcons.microphone,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, YoungEngineersSpeakers.routeName);
+                      },
+                      title: Text(
+                        'Speakers',
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            'See the Speakers',
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromRGBO(144, 144, 144, 1),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(70, 0, 10, 0),
+                      child: Divider(
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        height: 6,
+                      ),
+                    ),
+                  ],
                 ),
-                TextSpan(text: 'N'),
-                TextSpan(text: 'G'),
-                TextSpan(text: '  '),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'N'),
-                TextSpan(text: 'G'),
-                TextSpan(text: 'I'),
-                TextSpan(
-                  text: 'N',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        FontAwesomeIcons.calendarAlt,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, YoungEngineersSchedule.routeName);
+                      },
+                      title: Text(
+                        'Schedule',
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            'See the programme of event',
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromRGBO(144, 144, 144, 1),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(70, 0, 10, 0),
+                      child: Divider(
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        height: 6,
+                      ),
+                    ),
+                  ],
                 ),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'R'),
-                TextSpan(text: 'S'),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.deck,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, SocialEvents.routeName);
+                      },
+                      title: Text(
+                        'Social Events',
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            'See the fun activities available',
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromRGBO(144, 144, 144, 1),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(70, 0, 10, 0),
+                      child: Divider(
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                        height: 6,
+                      ),
+                    ),
+                  ],
+                ),
+                if (snapshot.hasData && snapshot.data!.docs.isNotEmpty)
+                  Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          FontAwesomeIcons.question,
+                          color: Color.fromRGBO(165, 54, 146, 1),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, Questions.routeName,
+                              arguments: snapshot.data!.docs);
+                        },
+                        title: Text(
+                          'Q&A Links',
+                          style: TextStyle(
+                            fontSize: 16.5,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                            fontFamily: 'Montserrat',
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              'Got any Question? Ask!',
+                              style: TextStyle(
+                                fontSize: 13.5,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromRGBO(144, 144, 144, 1),
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color.fromRGBO(165, 54, 146, 1),
+                          size: 20,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(70, 0, 10, 0),
+                        child: Divider(
+                          color: Color.fromRGBO(165, 54, 146, 1),
+                          height: 6,
+                        ),
+                      ),
+                    ],
+                  ),
               ],
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 1,
-        toolbarHeight: 65,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-            icon: Icon(Icons.notes_rounded),
-            splashColor: Colors.transparent,
-          )
-        ],
-      ),
-      endDrawer: AppDrawer(),
-      body: WillPopScope(
-        onWillPop: () async {
-          selected = HomePage.routeName;
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
-          return false;
-        },
-        child: ListView(
-          children: [
-            SizedBox(height: 20),
-            ListTile(
-              title: Text(
-                'Speakers',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'See the speakers',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.microphone,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.pushNamed(context, YoungEngineersSpeakers.routeName);
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 70, right: 20),
-              child: Divider(color: Colors.black, height: 10),
-            ),
-            ListTile(
-              title: Text(
-                'Panelists',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'Check out the panelists',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.personBooth,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.pushNamed(context, YoungEngineersPanelists.routeName);
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 70, right: 20),
-              child: Divider(color: Colors.black, height: 10),
-            ),
-            ListTile(
-              title: Text(
-                'Schedule',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'See the programme of event',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.calendarAlt,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.pushNamed(context, YoungEngineersSchedule.routeName);
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 70, right: 20),
-              child: Divider(color: Colors.black, height: 10),
-            ),
-            ListTile(
-              title: Text(
-                'Q&A Links',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF1C293D),
-                    fontWeight: FontWeight.w500),
-              ),
-              subtitle: Text(
-                'Got any question? Ask!',
-                style: TextStyle(fontSize: 17),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.question,
-                size: 32,
-                color: Theme.of(context).hintColor,
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.pushNamed(context, Questions.routeName);
-              },
-            ),
-          ],
-        ),
-      ),
+            );
+          }),
+      pageHeader: 'Young Engineers',
     );
   }
 }
