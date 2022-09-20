@@ -1,7 +1,9 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StreamLive extends StatefulWidget {
@@ -13,115 +15,97 @@ class StreamLive extends StatefulWidget {
 }
 
 class _StreamLiveState extends State<StreamLive> {
-  Future<void> openUrl(String url, BuildContext context) async {
-    if (await canLaunchUrl(Uri.parse(url)))
-      launchUrl(Uri.parse(url));
-    else
-      showError(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 20),
-              children: [
-                TextSpan(text: 'S'),
-                TextSpan(text: 'T'),
-                TextSpan(
-                  text: 'R',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+    return PageDecoration(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('stream_live')
+            .orderBy('id')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.none ||
+              snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(
+                  Color.fromRGBO(165, 54, 146, 1),
                 ),
-                TextSpan(text: 'E'),
-                TextSpan(text: 'A'),
-                TextSpan(text: 'M'),
-                TextSpan(text: '  '),
-                TextSpan(text: 'L'),
-                TextSpan(
-                  text: 'I',
-                  style: TextStyle(color: Theme.of(context).hintColor),
-                ),
-                TextSpan(text: 'V'),
-                TextSpan(text: 'E'),
-              ],
-            ),
-          ),
-        ),
-        elevation: 1,
-        toolbarHeight: 65,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('stream_live')
-              .orderBy('id')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none ||
-                snapshot.connectionState == ConnectionState.waiting)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text(
-                  'No Available Links',
-                  style: TextStyle(color: Colors.black),
-                ),
-              );
-            }
-
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                Map doc =
-                    snapshot.data!.docs[index].data()! as Map<String, dynamic>;
-                return Column(
-                  children: [
-                    if (index == 0) SizedBox(height: 20),
-                    ListTile(
-                      title: Text(
-                        doc['name'] ?? 'Link $index',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF1C293D),
-                            fontWeight: FontWeight.w500),
-                      ),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                      onTap: () async {
-                        String link = doc['link'] ?? '';
-                        bool active = doc['active'] ?? true;
-
-                        if (link.isNotEmpty && active)
-                          openUrl(link, context);
-                        else
-                          Fluttertoast.showToast(
-                              msg: 'Link not yet active',
-                              backgroundColor: Color(0xFF1C293D),
-                              textColor: Colors.white,
-                              toastLength: Toast.LENGTH_LONG);
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Divider(
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                );
-              },
-              itemCount: snapshot.data!.docs.length,
+                strokeWidth: 5,
+              ),
             );
-          },
-        ),
+          if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                'No Available Links. \nPlease Check Back Later.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
+
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              Map doc =
+                  snapshot.data!.docs[index].data()! as Map<String, dynamic>;
+              return Column(
+                children: [
+                  if (index == 0) SizedBox(height: 20),
+                  ListTile(
+                    title: Text(
+                      doc['name'] ?? 'Link $index',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                    leading: Icon(
+                      FontAwesomeIcons.link,
+                      size: 20,
+                      color: Color.fromRGBO(165, 54, 146, 1),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Color.fromRGBO(165, 54, 146, 1),
+                    ),
+                    onTap: () async {
+                      String link = doc['link'] ?? '';
+                      bool active = doc['active'] ?? false;
+
+                      if (link.isNotEmpty && active)
+                        openUrl(link, context);
+                      else
+                        Fluttertoast.showToast(
+                          msg: 'Link not yet active',
+                          backgroundColor: Color.fromRGBO(165, 54, 146, 1),
+                          textColor: Colors.white,
+                          toastLength: Toast.LENGTH_LONG,
+                        );
+                    },
+                  ),
+                  // if (index != snapshot.data!.docs.length - 1)
+                  Padding(
+                    padding: EdgeInsets.only(left: 65, right: 10),
+                    child: Divider(
+                      color: Color.fromRGBO(165, 54, 146, 1),
+                    ),
+                  )
+                ],
+              );
+            },
+            itemCount: snapshot.data!.docs.length,
+          );
+        },
       ),
+      pageHeader: 'Stream Live',
     );
   }
 }

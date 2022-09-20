@@ -1,8 +1,8 @@
 import 'package:apwen/drawer.dart';
+import 'package:apwen/page_decoration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Questions extends StatefulWidget {
   static const String routeName = '/questions';
@@ -13,40 +13,10 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
-  Future<void> openUrl(String url, BuildContext context) async {
-    if (await canLaunchUrl(Uri.parse(url)))
-      launchUrl(Uri.parse(url));
-    else
-      showError(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-              style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 21),
-              children: [
-                TextSpan(text: 'Q'),
-                TextSpan(
-                  text: '&',
-                  style: TextStyle(color: Theme.of(context).hintColor),
-                ),
-                TextSpan(text: 'A'),
-              ],
-            ),
-          ),
-        ),
-        elevation: 1,
-        toolbarHeight: 65,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: StreamBuilder<QuerySnapshot>(
+    return PageDecoration(
+      child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('questions')
               .orderBy('id')
@@ -56,17 +26,26 @@ class _QuestionsState extends State<Questions> {
             if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.connectionState == ConnectionState.waiting)
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(
+                    Color.fromRGBO(165, 54, 146, 1),
+                  ),
+                  strokeWidth: 5,
+                ),
               );
             if (!(snapshot.hasData) || snapshot.data!.docs.isEmpty) {
               return Center(
                 child: Text(
-                  'No Available Links',
-                  style: TextStyle(color: Colors.black),
+                  'No Data',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    fontFamily: 'Montserrat',
+                  ),
                 ),
               );
             }
-
             return ListView.builder(
               itemBuilder: (context, index) {
                 Map doc =
@@ -78,21 +57,27 @@ class _QuestionsState extends State<Questions> {
                       title: Text(
                         doc['name'] ?? 'Link $index',
                         style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF1C293D),
-                            fontWeight: FontWeight.w500),
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromRGBO(165, 54, 146, 1),
+                      ),
                       onTap: () async {
                         String link = doc['link'] ?? '';
-                        bool active = doc['active'] ?? true;
+                        bool active = doc['active'] ?? false;
 
                         if (link.isNotEmpty && active)
                           openUrl(link, context);
                         else
                           Fluttertoast.showToast(
                               msg: 'Link not yet active',
-                              backgroundColor: Color(0xFF1C293D),
+                              backgroundColor: Color.fromRGBO(165, 54, 146, 1),
                               textColor: Colors.white,
                               toastLength: Toast.LENGTH_LONG);
                       },
@@ -100,7 +85,7 @@ class _QuestionsState extends State<Questions> {
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: Divider(
-                        color: Colors.black,
+                        color: Color.fromRGBO(165, 54, 146, 1),
                       ),
                     )
                   ],
@@ -108,9 +93,8 @@ class _QuestionsState extends State<Questions> {
               },
               itemCount: snapshot.data!.docs.length,
             );
-          },
-        ),
-      ),
+          }),
+      pageHeader: 'Q&A',
     );
   }
 }
