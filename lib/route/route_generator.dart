@@ -2,18 +2,17 @@ import 'package:apwen/screens/about_apwen.dart';
 import 'package:apwen/screens/about_speakers.dart';
 import 'package:apwen/screens/comments.dart';
 import 'package:apwen/screens/home_page.dart';
+import 'package:apwen/screens/panelists.dart';
 import 'package:apwen/screens/programme.dart';
-import 'package:apwen/screens/social_events.dart';
+import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/stream_live.dart';
-import 'package:apwen/screens/topic_brief.dart';
 import 'package:apwen/screens/topics_speakers.dart';
-import 'package:apwen/screens/young_engineers/p_and_s_about.dart';
-import 'package:apwen/screens/young_engineers/panelists.dart';
 import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,7 @@ class RouteGenerator {
         );
 
       case TopicsSpeakers.routeName:
-        return MaterialPageRoute(
+        return CupertinoPageRoute(
           builder: (_) => TopicsSpeakers(),
         );
       case AboutSpeaker.routeName:
@@ -36,62 +35,40 @@ class RouteGenerator {
           return CupertinoPageRoute(
             builder: (_) => AboutSpeaker(
               index: args['index'],
-              aboutSpeaker: args['aboutSpeakers'],
+              aboutSpeaker: args['about'],
               image: args['image'],
               name: args['name'],
             ),
           );
         return errorPage(settings);
-      case TopicBrief.routeName:
-        if (args is Map)
-          return CupertinoPageRoute(
-            builder: (_) => TopicBrief(
-                index: args['index'],
-                aboutSpeaker: args['aboutSpeaker'] ?? '',
-                aboutTopic: args['aboutTopic'] ?? '',
-                id: args['id'],
-                image: args['image'] ?? '',
-                name: args['name'] ?? '',
-                topic: args['topic'] ?? ''),
-          );
-        return errorPage(settings);
+
       case Comments.routeName:
         if (args is Map)
-          return MaterialPageRoute(builder: (_) => Comments(id: args['id']));
+          return CupertinoPageRoute(builder: (_) => Comments(id: args['id']));
         return errorPage(settings);
       case Sponsors.routeName:
-        return MaterialPageRoute(builder: (_) => Sponsors());
+        return CupertinoPageRoute(builder: (_) => Sponsors());
       case Programme.routeName:
-        return MaterialPageRoute(builder: (_) => Programme());
+        return CupertinoPageRoute(builder: (_) => Programme());
       case SocialEvents.routeName:
-        return MaterialPageRoute(builder: (_) => SocialEvents());
+        return CupertinoPageRoute(builder: (_) => SocialEvents());
       case YoungEngineersHome.routeName:
-        return MaterialPageRoute(builder: (_) => YoungEngineersHome());
+        return CupertinoPageRoute(builder: (_) => YoungEngineersHome());
       case YoungEngineersSchedule.routeName:
         return CupertinoPageRoute(builder: (_) => YoungEngineersSchedule());
       case AboutAPWEN.routeName:
-        return MaterialPageRoute(builder: (_) => AboutAPWEN());
-      case YoungEngineersPanelists.routeName:
-        return CupertinoPageRoute(builder: (_) => YoungEngineersPanelists());
+        return CupertinoPageRoute(builder: (_) => AboutAPWEN());
       case YoungEngineersSpeakers.routeName:
         return CupertinoPageRoute(builder: (_) => YoungEngineersSpeakers());
-      case YoungEngineersPAndSAbout.routeName:
-        if (args is Map)
-          return CupertinoPageRoute(
-            builder: (_) => YoungEngineersPAndSAbout(
-                index: args['index'],
-                path: args['path'] ?? '',
-                about: args['about'] ?? [],
-                subAbout: args['subAbout'] ?? [],
-                name: args['name'] ?? '',
-                proseAbout: args['proseAbout'] ?? ''),
-          );
-        else
-          return errorPage(settings);
+
       case Questions.routeName:
         return CupertinoPageRoute(builder: (_) => Questions());
+
       case StreamLive.routeName:
         return CupertinoPageRoute(builder: (_) => StreamLive());
+
+      case Panelists.routeName:
+        return CupertinoPageRoute(builder: (_) => Panelists());
 
       default:
         return errorPage(settings);
@@ -99,7 +76,7 @@ class RouteGenerator {
   }
 
   static Route<dynamic> errorPage(settings) {
-    return MaterialPageRoute(builder: (_) {
+    return CupertinoPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Error'),

@@ -1,3 +1,4 @@
+import 'package:apwen/page_decoration.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -17,82 +18,32 @@ class AboutSpeaker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 5, top: 5),
-          child: RichText(
-            text: TextSpan(
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontSize: 23),
-                children: [
-                  TextSpan(text: 'S'),
-                  TextSpan(text: 'P'),
-                  TextSpan(text: 'E'),
-                  TextSpan(
-                    text: 'A',
-                    style: TextStyle(color: Theme.of(context).hintColor),
-                  ),
-                  TextSpan(text: 'K'),
-                  TextSpan(text: 'E'),
-                  TextSpan(text: 'R'),
-                ]),
-          ),
-        ),
-        elevation: 0,
-      ),
-      body: ListView(
+    return PageDecoration(
+      child: Column(
         children: [
           SizedBox(height: 30),
-          Stack(
-            children: [
-              Hero(
-                tag: 'image$index',
-                child: ClipRRect(
-                  child: Container(
-                    width: width,
-                    height: width - width / 4,
-                    child: CachedNetworkImage(
-                      imageUrl: image,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      errorWidget: (context, _, __) {
-                        return Center(
-                          child: Icon(
-                            Icons.error,
-                            size: 38,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+          Hero(
+            tag: 'image$index',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(200),
+              child: Container(
+                width: 200,
+                height: 200,
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                  errorWidget: (context, _, __) {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                        size: 38,
+                      ),
+                    );
+                  },
                 ),
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   left: 0,
-              //   right: 0,
-              //   height: 50,
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: [Colors.black, Colors.white10],
-              //         begin: Alignment.topCenter,
-              //         end: Alignment.bottomCenter,
-              //       ),
-              //     ),
-              //     alignment: Alignment.center,
-              //     child: Text('Undie Ebenezer Unimakpel',
-              //         style: Theme.of(context)
-              //             .textTheme
-              //             .bodyText2
-              //             ?.copyWith(fontSize: 20)),
-              //   ),
-              // ),
-            ],
+            ),
           ),
           SizedBox(height: 10),
           Padding(
@@ -100,31 +51,41 @@ class AboutSpeaker extends StatelessWidget {
             child: Center(
               child: Text(
                 name,
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
-          SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          SizedBox(height: 15),
+          Divider(
+            color: Color.fromRGBO(165, 54, 146, 1),
+            height: 0,
+          ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 15),
               children: [
-                Text('About',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 23, color: Theme.of(context).hintColor)),
-                SizedBox(height: 12),
                 Text(
-                  aboutSpeaker,
+                  aboutSpeaker.toString(),
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontSize: 17, fontFamily: 'Lato'),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    height: 1.5,
+                  ),
                 ),
-                SizedBox(height: 20)
               ],
             ),
           )
         ],
       ),
+      pageHeader: 'Profile',
     );
   }
 }
