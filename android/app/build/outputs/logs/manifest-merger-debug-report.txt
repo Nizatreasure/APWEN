@@ -21,7 +21,6 @@ INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidMan
 INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml:1:1-68:12
 INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml:1:1-68:12
 MERGED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml:1:1-68:12
-MERGED from [:shared_preferences_android] /Users/NIZA/Flutter-Projects/APWEN/build/shared_preferences_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:cloud_firestore] /Users/NIZA/Flutter-Projects/APWEN/build/cloud_firestore/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [:firebase_core] /Users/NIZA/Flutter-Projects/APWEN/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [:permission_handler_android] /Users/NIZA/Flutter-Projects/APWEN/build/permission_handler_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -30,7 +29,9 @@ MERGED from [:fluttertoast] /Users/NIZA/Flutter-Projects/APWEN/build/fluttertoas
 MERGED from [:url_launcher_android] /Users/NIZA/Flutter-Projects/APWEN/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
 MERGED from [:path_provider_android] /Users/NIZA/Flutter-Projects/APWEN/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:android_path_provider] /Users/NIZA/Flutter-Projects/APWEN/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:connectivity_plus] /Users/NIZA/Flutter-Projects/APWEN/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:flutter_downloader] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_downloader/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
+MERGED from [:flutter_native_splash] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_native_splash/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/a3b86b42fafb2019c6d99a912992ce19/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/cea45e25bbe77c9713c39e234ccfd7bd/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
 MERGED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:2:1-26:12
@@ -225,8 +226,6 @@ uses-sdk
 INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/NIZA/Flutter-Projects/APWEN/android/app/src/main/AndroidManifest.xml
-MERGED from [:shared_preferences_android] /Users/NIZA/Flutter-Projects/APWEN/build/shared_preferences_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:shared_preferences_android] /Users/NIZA/Flutter-Projects/APWEN/build/shared_preferences_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:cloud_firestore] /Users/NIZA/Flutter-Projects/APWEN/build/cloud_firestore/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:cloud_firestore] /Users/NIZA/Flutter-Projects/APWEN/build/cloud_firestore/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /Users/NIZA/Flutter-Projects/APWEN/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
@@ -243,8 +242,12 @@ MERGED from [:path_provider_android] /Users/NIZA/Flutter-Projects/APWEN/build/pa
 MERGED from [:path_provider_android] /Users/NIZA/Flutter-Projects/APWEN/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:android_path_provider] /Users/NIZA/Flutter-Projects/APWEN/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:android_path_provider] /Users/NIZA/Flutter-Projects/APWEN/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:connectivity_plus] /Users/NIZA/Flutter-Projects/APWEN/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:connectivity_plus] /Users/NIZA/Flutter-Projects/APWEN/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_downloader] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_downloader/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_downloader] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_downloader/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_native_splash] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_native_splash/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_native_splash] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_native_splash/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/a3b86b42fafb2019c6d99a912992ce19/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/a3b86b42fafb2019c6d99a912992ce19/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/cea45e25bbe77c9713c39e234ccfd7bd/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
@@ -361,6 +364,16 @@ ADDED from [:url_launcher_android] /Users/NIZA/Flutter-Projects/APWEN/build/url_
 		ADDED from [:url_launcher_android] /Users/NIZA/Flutter-Projects/APWEN/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
 	android:name
 		ADDED from [:url_launcher_android] /Users/NIZA/Flutter-Projects/APWEN/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:connectivity_plus] /Users/NIZA/Flutter-Projects/APWEN/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+MERGED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:13:5-79
+MERGED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:13:5-79
+MERGED from [androidx.work:work-runtime:2.7.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/7dbe88f7b6e9827bdd9ac54c043689c6/work-runtime-2.7.1/AndroidManifest.xml:26:5-79
+MERGED from [androidx.work:work-runtime:2.7.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/7dbe88f7b6e9827bdd9ac54c043689c6/work-runtime-2.7.1/AndroidManifest.xml:26:5-79
+MERGED from [io.grpc:grpc-android:1.44.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/bb034e126f121bd1853821de7e6d9777/jetified-grpc-android-1.44.1/AndroidManifest.xml:9:5-79
+MERGED from [io.grpc:grpc-android:1.44.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/bb034e126f121bd1853821de7e6d9777/jetified-grpc-android-1.44.1/AndroidManifest.xml:9:5-79
+	android:name
+		ADDED from [:connectivity_plus] /Users/NIZA/Flutter-Projects/APWEN/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
 intent#action:name:android.intent.action.VIEW
 ADDED from [:flutter_downloader] /Users/NIZA/Flutter-Projects/APWEN/build/flutter_downloader/intermediates/library_manifest/debug/AndroidManifest.xml:9:9-11:18
 uses-library#androidx.window.extensions
@@ -375,14 +388,6 @@ ADDED from [androidx.window:window:1.0.0-beta04] /Users/NIZA/.gradle/caches/tran
 		ADDED from [androidx.window:window:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/cea45e25bbe77c9713c39e234ccfd7bd/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
 	android:name
 		ADDED from [androidx.window:window:1.0.0-beta04] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/cea45e25bbe77c9713c39e234ccfd7bd/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
-uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:13:5-79
-MERGED from [androidx.work:work-runtime:2.7.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/7dbe88f7b6e9827bdd9ac54c043689c6/work-runtime-2.7.1/AndroidManifest.xml:26:5-79
-MERGED from [androidx.work:work-runtime:2.7.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/7dbe88f7b6e9827bdd9ac54c043689c6/work-runtime-2.7.1/AndroidManifest.xml:26:5-79
-MERGED from [io.grpc:grpc-android:1.44.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/bb034e126f121bd1853821de7e6d9777/jetified-grpc-android-1.44.1/AndroidManifest.xml:9:5-79
-MERGED from [io.grpc:grpc-android:1.44.1] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/bb034e126f121bd1853821de7e6d9777/jetified-grpc-android-1.44.1/AndroidManifest.xml:9:5-79
-	android:name
-		ADDED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:13:22-76
 meta-data#com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar
 ADDED from [com.google.firebase:firebase-firestore:24.2.2] /Users/NIZA/.gradle/caches/transforms-2/files-2.1/e6c96f5b49299849e4e96ee1a447d586/jetified-firebase-firestore-24.2.2/AndroidManifest.xml:20:13-22:85
 	android:value

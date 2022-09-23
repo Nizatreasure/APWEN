@@ -230,8 +230,6 @@ layout toast_custom
 menu example_menu
 menu example_menu2
 mipmap app_icon
-mipmap background
-mipmap ic_launcher
 raw keep
 string androidx_startup
 string common_google_play_services_enable_button
