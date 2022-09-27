@@ -1,9 +1,7 @@
 import 'package:apwen/drawer.dart';
 import 'package:apwen/page_decoration.dart';
-import 'package:apwen/screens/home_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AboutAPWEN extends StatefulWidget {
   static const String routeName = '/aboutapwen';
@@ -14,7 +12,7 @@ class AboutAPWEN extends StatefulWidget {
 }
 
 class _AboutAPWENState extends State<AboutAPWEN> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   late TapGestureRecognizer _gestureRecognizer;
 

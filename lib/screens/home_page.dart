@@ -1,23 +1,16 @@
-import 'dart:convert';
-
 import 'package:apwen/drawer.dart';
 import 'package:apwen/provider.dart';
 import 'package:apwen/screens/about_apwen.dart';
 import 'package:apwen/screens/panelists.dart';
 import 'package:apwen/screens/programme.dart';
-import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/stream_live.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';

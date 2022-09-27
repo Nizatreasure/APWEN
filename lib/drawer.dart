@@ -2,12 +2,10 @@ import 'package:apwen/screens/about_apwen.dart';
 import 'package:apwen/screens/home_page.dart';
 import 'package:apwen/screens/panelists.dart';
 import 'package:apwen/screens/programme.dart';
-import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/sponsors.dart';
 import 'package:apwen/screens/topics_speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String selected = '/';

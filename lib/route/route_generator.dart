@@ -12,7 +12,6 @@ import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
 import 'package:apwen/screens/young_engineers/speakers.dart';
 import 'package:apwen/screens/young_engineers/young_engineers_home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
