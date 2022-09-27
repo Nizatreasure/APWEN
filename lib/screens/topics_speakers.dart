@@ -1,7 +1,5 @@
-import 'package:apwen/drawer.dart';
 import 'package:apwen/page_decoration.dart';
 import 'package:apwen/screens/about_speakers.dart';
-import 'package:apwen/screens/home_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

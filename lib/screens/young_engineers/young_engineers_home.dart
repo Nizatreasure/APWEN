@@ -1,6 +1,4 @@
-import 'package:apwen/drawer.dart';
 import 'package:apwen/page_decoration.dart';
-import 'package:apwen/screens/home_page.dart';
 import 'package:apwen/screens/young_engineers/social_events.dart';
 import 'package:apwen/screens/young_engineers/questions.dart';
 import 'package:apwen/screens/young_engineers/schedule_items/schedule.dart';
